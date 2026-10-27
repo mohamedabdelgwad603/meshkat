@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mishkat/features/reader/data/models/ayah_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_ayah_model.dart';
 
 // A full surah's text: its metadata plus every ayah, with the basmala split out.
 class SurahTextModel extends Equatable {
@@ -62,6 +63,18 @@ class SurahTextModel extends Equatable {
         isMeccan: true,
         ayahs: List.generate(7, (i) => AyahModel.dummy()),
       );
+
+  // Returns a copy whose ayahs carry the printed mushaf text, page and juz.
+  SurahTextModel withMushaf(List<MushafAyahModel> mushaf) {
+    if (mushaf.length != ayahs.length) return this;
+    return SurahTextModel(
+      number: number,
+      name: name,
+      englishName: englishName,
+      isMeccan: isMeccan,
+      ayahs: [for (var i = 0; i < ayahs.length; i++) ayahs[i].copyWithMushaf(mushaf[i])],
+    );
+  }
 
   // Tells whether a separate basmala line should be shown above the surah.
   bool get showsBasmala => number != 1 && number != 9;

@@ -13,7 +13,6 @@ import 'package:mishkat/core/utills/widgets/state_message_view.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_state.dart';
 import 'package:mishkat/features/settings/presentation/widgets/language_selector.dart';
-import 'package:mishkat/features/settings/presentation/widgets/quran_font_size_control.dart';
 import 'package:mishkat/features/settings/presentation/widgets/reciter_setting_tile.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_card.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_link_tile.dart';
@@ -48,8 +47,6 @@ class SettingsBody extends StatelessWidget {
               ),
               verticalSpace(20.h),
               const SettingsCard(child: LanguageSelector()),
-              verticalSpace(12.h),
-              const SettingsCard(child: QuranFontSizeControl()),
               verticalSpace(12.h),
               const SettingsCard(child: ReciterSettingTile()),
               verticalSpace(12.h),

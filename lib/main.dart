@@ -17,6 +17,7 @@ Future<void> main() async {
     androidNotificationChannelId: 'com.mishkat.quran.audio',
     androidNotificationChannelName: 'Quran recitation',
     androidNotificationOngoing: true,
+    androidNotificationIcon: 'drawable/ic_notification',
   );
   await EasyLocalization.ensureInitialized();
   await initDi();

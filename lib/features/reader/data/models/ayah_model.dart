@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_ayah_model.dart';
 
 // One ayah of the Uthmani text with its mushaf position.
 class AyahModel extends Equatable {
@@ -21,7 +22,7 @@ class AyahModel extends Equatable {
   factory AyahModel.fromJson(Map<String, dynamic> json) => AyahModel(
         number: json['number'] as int,
         numberInSurah: json['numberInSurah'] as int,
-        text: (json['text'] as String).replaceAll('﻿', '').trim(),
+        text: (json['text'] as String).replaceAll('\uFEFF', '').trim(),
         juz: json['juz'] as int? ?? 1,
         page: json['page'] as int? ?? 1,
       );
@@ -39,7 +40,7 @@ class AyahModel extends Equatable {
   factory AyahModel.dummy() => const AyahModel(
         number: 2,
         numberInSurah: 2,
-        text: 'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ',
+        text: 'ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ',
         juz: 1,
         page: 1,
       );
@@ -47,6 +48,10 @@ class AyahModel extends Equatable {
   // Returns a copy with a different text.
   AyahModel copyWithText(String newText) =>
       AyahModel(number: number, numberInSurah: numberInSurah, text: newText, juz: juz, page: page);
+
+  // Returns a copy with the text, page and juz of the printed mushaf.
+  AyahModel copyWithMushaf(MushafAyahModel mushaf) =>
+      AyahModel(number: number, numberInSurah: numberInSurah, text: mushaf.text, juz: mushaf.juz, page: mushaf.page);
 
   // Lists the fields used for equality.
   @override

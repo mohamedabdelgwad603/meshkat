@@ -9,6 +9,6 @@ import 'package:mishkat/features/home/presentation/cubit/home_cubit.dart';
 void setupHomeDi() {
   getIt.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImp(getIt()));
   getIt.registerLazySingleton<HomeLocalDataSource>(() => HomeLocalDataSourceImp(getIt()));
-  getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImp(getIt(), getIt()));
+  getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImp(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => HomeCubit(getIt()));
 }

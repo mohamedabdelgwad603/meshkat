@@ -14,9 +14,8 @@ import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.da
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_state.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
-import 'package:mishkat/features/reader/presentation/widgets/font_size_sheet.dart';
 
-// Reader top bar: back, surah name with juz and page, bookmark and reading settings.
+// Reader top bar: back, the page's surah with its juz and page, and the bookmark button.
 class ReaderTopBar extends StatelessWidget {
   // Creates the top bar.
   const ReaderTopBar({super.key});
@@ -38,11 +37,6 @@ class ReaderTopBar extends StatelessWidget {
               ),
               Expanded(child: success == null ? const SizedBox.shrink() : _TitleBlock(state: success)),
               if (success != null) _BookmarkButton(state: success),
-              RoundIconButton(
-                icon: Icons.text_fields_rounded,
-                semanticLabel: TextManager.readingSettings,
-                onPressed: () => showFontSizeSheet(context),
-              ),
             ],
           );
         },
@@ -62,12 +56,13 @@ class _TitleBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isArabic = context.locale.languageCode == 'ar';
-    final first = state.currentPage.first;
+    final page = state.currentPage;
+    final surah = state.currentSurah;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomText(
-          text: isArabic ? state.surah.shortName : state.surah.englishName,
+          text: isArabic ? surah.shortName : surah.englishName,
           translate: false,
           maxLines: 1,
           style: getBoldStyle(
@@ -80,7 +75,7 @@ class _TitleBlock extends StatelessWidget {
         ),
         CustomText(
           text: TextManager.juzPage,
-          args: [localizedDigits(context, first.juz), localizedDigits(context, first.page)],
+          args: [localizedDigits(context, page.juz), localizedDigits(context, page.number)],
           style: getRegularStyle(context: context, fontSize: 12.sp, color: ColorsManager.grey),
         ),
       ],
@@ -88,7 +83,7 @@ class _TitleBlock extends StatelessWidget {
   }
 }
 
-// Saves or unsaves the first ayah of the visible page (or the selected ayah).
+// Saves or unsaves the selected ayah, or the first ayah that starts on the visible page.
 class _BookmarkButton extends StatelessWidget {
   final ReaderSuccess state;
 
@@ -98,16 +93,18 @@ class _BookmarkButton extends StatelessWidget {
   // Builds a filled or outlined bookmark icon.
   @override
   Widget build(BuildContext context) {
-    final ayah = state.selectedAyah != null ? state.surah.ayahAt(state.selectedAyah!) : state.currentPage.first;
+    final target = state.hasSelection
+        ? (surah: state.selectedSurah!, ayah: state.selectedAyah!)
+        : state.mushaf.firstAyahStartingOn(state.currentPageIndex);
     return BlocBuilder<BookmarksCubit, BookmarksState>(
       builder: (context, bookmarks) {
-        final saved = bookmarks is BookmarksSuccess && bookmarks.isSaved(state.surah.number, ayah.numberInSurah);
+        final saved = bookmarks is BookmarksSuccess && bookmarks.isSaved(target.surah, target.ayah);
         return RoundIconButton(
           icon: saved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
           semanticLabel: TextManager.bookmarkPage,
           iconColor: saved ? ColorsManager.secondry : ColorsManager.primary,
           onPressed: () async {
-            final nowSaved = await ReaderCubit.get(context).toggleBookmark(ayah);
+            final nowSaved = await ReaderCubit.get(context).toggleBookmark(target.surah, target.ayah);
             if (!context.mounted) return;
             context.showSnack(CustomText(
               text: nowSaved ? TextManager.bookmarkAdded : TextManager.bookmarkRemoved,

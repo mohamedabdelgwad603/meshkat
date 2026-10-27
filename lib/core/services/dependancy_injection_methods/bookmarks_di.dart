@@ -7,6 +7,6 @@ import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.da
 // Registers the bookmarks dependencies; the cubit is shared app-wide.
 void setupBookmarksDi() {
   getIt.registerLazySingleton<BookmarksLocalDataSource>(() => BookmarksLocalDataSourceImp(getIt()));
-  getIt.registerLazySingleton<BookmarksRepo>(() => BookmarksRepoImp(getIt()));
+  getIt.registerLazySingleton<BookmarksRepo>(() => BookmarksRepoImp(getIt(), getIt()));
   getIt.registerLazySingleton(() => BookmarksCubit(getIt()));
 }

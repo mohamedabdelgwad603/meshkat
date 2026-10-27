@@ -34,10 +34,12 @@ class AyahActionsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ReaderCubit, ReaderState>(
       buildWhen: (a, b) =>
-          b is ReaderSuccess && (a is! ReaderSuccess || a.selectedAyah != b.selectedAyah),
+          b is ReaderSuccess &&
+          (a is! ReaderSuccess || a.selectedSurah != b.selectedSurah || a.selectedAyah != b.selectedAyah),
       builder: (context, state) {
         final success = state is ReaderSuccess ? state : null;
-        final selected = success?.selectedAyah;
+        final ayah = success?.selectedAyahModel;
+        final surah = success != null && success.hasSelection ? success.mushaf.surah(success.selectedSurah!) : null;
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 260),
           transitionBuilder: (child, animation) => SlideTransition(
@@ -45,14 +47,14 @@ class AyahActionsSheet extends StatelessWidget {
                 .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
             child: child,
           ),
-          child: selected == null || success == null
+          child: ayah == null || surah == null
               ? const SizedBox.shrink(key: ValueKey('none'))
               : _SheetContent(
-                  key: ValueKey(selected),
-                  surahNumber: success.surah.number,
-                  surahName: success.surah.shortName,
-                  surahEnglishName: success.surah.englishName,
-                  ayah: success.surah.ayahAt(selected),
+                  key: ValueKey('${surah.number}:${ayah.numberInSurah}'),
+                  surahNumber: surah.number,
+                  surahName: surah.shortName,
+                  surahEnglishName: surah.englishName,
+                  ayah: ayah,
                 ),
         );
       },
@@ -186,7 +188,7 @@ class _ActionsGrid extends StatelessWidget {
             return AyahActionButton(
               icon: saved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
               label: saved ? TextManager.savedAction : TextManager.saveAction,
-              onTap: () => ReaderCubit.get(context).toggleBookmark(ayah),
+              onTap: () => ReaderCubit.get(context).toggleBookmark(surahNumber, ayah.numberInSurah),
             );
           },
         ),

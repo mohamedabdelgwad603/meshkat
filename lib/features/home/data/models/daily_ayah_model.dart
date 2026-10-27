@@ -23,7 +23,7 @@ class DailyAyahModel extends Equatable {
     final name = (surah['name'] as String).trim();
     final parts = name.split(' ');
     return DailyAyahModel(
-      text: (json['text'] as String).replaceAll('﻿', '').trim(),
+      text: (json['text'] as String).replaceAll('\uFEFF', '').trim(),
       surahNumber: surah['number'] as int,
       surahName: parts.length > 1 ? parts.sublist(1).join(' ') : name,
       surahEnglishName: surah['englishName'] as String? ?? '',
@@ -49,9 +49,18 @@ class DailyAyahModel extends Equatable {
         'ayahNumber': ayahNumber,
       };
 
+  // Returns a copy with a different text.
+  DailyAyahModel copyWithText(String newText) => DailyAyahModel(
+        text: newText,
+        surahNumber: surahNumber,
+        surahName: surahName,
+        surahEnglishName: surahEnglishName,
+        ayahNumber: ayahNumber,
+      );
+
   // Builds a placeholder for Skeletonizer loading states.
   factory DailyAyahModel.dummy() => const DailyAyahModel(
-        text: 'أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ',
+        text: 'أَلَا بِذِكۡرِ ٱللَّهِ تَطۡمَئِنُّ ٱلۡقُلُوبُ',
         surahNumber: 13,
         surahName: 'ٱلرَّعْدِ',
         surahEnglishName: 'Ar-Ra\'d',

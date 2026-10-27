@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Monochrome app logo for the status bar, cropped to the logo edges with thicker strokes so it stays clear at small sizes. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="88"
+    android:viewportHeight="88">
+    <group
+        android:translateX="-6"
+        android:translateY="-6">
+        <path
+            android:pathData="M24,20H76A4,4 0,0 1,80 24V76A4,4 0,0 1,76 80H24A4,4 0,0 1,20 76V24A4,4 0,0 1,24 20Z"
+            android:strokeWidth="4.5"
+            android:strokeColor="#FFFFFFFF" />
+        <group
+            android:pivotX="50"
+            android:pivotY="50"
+            android:rotation="45">
+            <path
+                android:pathData="M24,20H76A4,4 0,0 1,80 24V76A4,4 0,0 1,76 80H24A4,4 0,0 1,20 76V24A4,4 0,0 1,24 20Z"
+                android:strokeWidth="4.5"
+                android:strokeColor="#FFFFFFFF" />
+        </group>
+        <path
+            android:pathData="M37,72V49C37,39 43,32 50,28C57,32 63,39 63,49V72Z"
+            android:strokeWidth="4.5"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineJoin="round" />
+        <path
+            android:pathData="M50,40C55,46 55.5,51.5 50,56C44.5,51.5 45,46 50,40Z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M42,60H58C57,65 54,67.5 50,67.5S43,65 42,60Z"
+            android:fillColor="#FFFFFFFF" />
+        <path
+            android:pathData="M50,67.5V72"
+            android:strokeWidth="4.5"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineCap="round" />
+    </group>
+</vector>

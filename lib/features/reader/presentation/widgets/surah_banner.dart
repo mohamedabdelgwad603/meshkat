@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mishkat/config/themes/color_manager.dart';
 import 'package:mishkat/config/themes/font_manager.dart';
 import 'package:mishkat/config/themes/text_styles.dart';
 import 'package:mishkat/core/utills/functions/localized_digits.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/core/utills/widgets/custom_text.dart';
-import 'package:mishkat/features/reader/data/models/surah_text_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_surah_model.dart';
 
-// Gold-framed green banner with the surah name, revelation place and ayah count.
+// Gold-framed green surah header that fills one mushaf line, with the revelation place and ayah count.
 class SurahBanner extends StatelessWidget {
-  final SurahTextModel surah;
+  final MushafSurahModel surah;
+  final double height;
 
-  // Creates the banner for the given surah.
-  const SurahBanner({super.key, required this.surah});
+  // Creates the banner at the given height; sizes inside it follow the height since it is already screen-fitted.
+  const SurahBanner({super.key, required this.surah, required this.height});
 
   // Builds the double-framed banner.
   @override
   Widget build(BuildContext context) {
-    final sideStyle = getRegularStyle(context: context, fontSize: 12.sp, color: ColorsManager.secondry);
+    final sideStyle = getRegularStyle(context: context, fontSize: height * 0.24, color: ColorsManager.secondry, height: 1);
     return Container(
-      height: 64.h,
-      padding: EdgeInsets.all(4.r),
+      height: height,
+      padding: EdgeInsets.all(height * 0.06),
       decoration: BoxDecoration(
         border: Border.all(color: ColorsManager.secondry, width: 1.5),
-        borderRadius: BorderRadius.circular(14.r),
+        borderRadius: BorderRadius.circular(height * 0.22),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.symmetric(horizontal: height * 0.3),
         decoration: BoxDecoration(
           color: ColorsManager.primary,
           border: Border.all(color: ColorsManager.goldBorder),
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(height * 0.16),
         ),
         child: Row(
           children: [
@@ -45,15 +45,16 @@ class SurahBanner extends StatelessWidget {
                 textDirection: TextDirection.rtl,
                 style: getBoldStyle(
                   context: context,
-                  fontSize: 22.sp,
+                  fontSize: height * 0.42,
                   color: ColorsManager.white,
                   fontFamily: FontManager.heading,
+                  height: 1.2,
                 ),
               ),
             ),
             CustomText(
               text: TextManager.ayahsLabel,
-              args: [localizedDigits(context, surah.ayahs.length)],
+              args: [localizedDigits(context, surah.ayahCount)],
               style: sideStyle,
             ),
           ],
@@ -62,4 +63,3 @@ class SurahBanner extends StatelessWidget {
     );
   }
 }
-

@@ -39,13 +39,23 @@ class BookmarkModel extends Equatable {
         'createdAt': createdAt.toIso8601String(),
       };
 
+  // Returns a copy with a different text.
+  BookmarkModel copyWithText(String newText) => BookmarkModel(
+        surahNumber: surahNumber,
+        surahName: surahName,
+        surahEnglishName: surahEnglishName,
+        ayahNumber: ayahNumber,
+        text: newText,
+        createdAt: createdAt,
+      );
+
   // Builds a placeholder for Skeletonizer loading states.
   factory BookmarkModel.dummy() => BookmarkModel(
         surahNumber: 1,
         surahName: 'ٱلْفَاتِحَةِ',
         surahEnglishName: 'Al-Faatiha',
         ayahNumber: 2,
-        text: 'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ',
+        text: 'ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ',
         createdAt: DateTime(2026),
       );
 

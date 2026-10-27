@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mishkat/config/routes/route_arguments.dart';
 import 'package:mishkat/config/themes/color_manager.dart';
 import 'package:mishkat/core/utills/widgets/state_message_view.dart';
-import 'package:mishkat/features/reader/data/models/surah_text_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_page_model.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
 import 'package:mishkat/features/reader/presentation/widgets/ayah_actions_sheet.dart';
@@ -65,7 +66,7 @@ class ReaderBody extends StatelessWidget {
   }
 }
 
-// Placeholder page shown while the surah loads.
+// Placeholder page shown while the mushaf loads.
 class _ReaderSkeleton extends StatelessWidget {
   // Creates the skeleton.
   const _ReaderSkeleton();
@@ -73,13 +74,12 @@ class _ReaderSkeleton extends StatelessWidget {
   // Builds a skeletonized dummy page.
   @override
   Widget build(BuildContext context) {
-    final dummy = SurahTextModel.dummy();
     return Column(
       children: [
         const ReaderTopBar(),
         Expanded(
           child: Skeletonizer(
-            child: MushafPage(surah: dummy, ayahs: dummy.ayahs, isFirstPage: true, onAyahTap: (_) {}),
+            child: MushafPage(page: MushafPageModel.dummy(), mushaf: MushafModel.dummy(), onAyahTap: (_, __) {}),
           ),
         ),
       ],

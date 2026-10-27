@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
 import 'package:mishkat/features/reader/presentation/widgets/mushaf_page.dart';
@@ -19,7 +18,7 @@ class MushafPageView extends StatefulWidget {
 class _MushafPageViewState extends State<MushafPageView> {
   late final PageController _controller;
 
-  // Opens the controller on the page holding the requested ayah.
+  // Opens the controller on the page where the requested ayah starts.
   @override
   void initState() {
     super.initState();
@@ -44,14 +43,13 @@ class _MushafPageViewState extends State<MushafPageView> {
         final success = state as ReaderSuccess;
         return PageView.builder(
           controller: _controller,
-          itemCount: success.pages.length,
+          itemCount: success.mushaf.pages.length,
           onPageChanged: cubit.onPageChanged,
           itemBuilder: (_, index) => MushafPage(
-            surah: success.surah,
-            ayahs: success.pages[index],
-            isFirstPage: index == 0,
+            page: success.mushaf.pages[index],
+            mushaf: success.mushaf,
+            selectedSurah: success.selectedSurah,
             selectedAyah: success.selectedAyah,
-            bottomPadding: success.selectedAyah == null ? 32.h : 360.h,
             onAyahTap: cubit.selectAyah,
           ),
         );

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:mishkat/features/reader/data/models/ayah_model.dart';
-import 'package:mishkat/features/reader/data/models/surah_text_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_page_model.dart';
+import 'package:mishkat/features/reader/data/models/mushaf_surah_model.dart';
 
 // Base state of the mushaf reader.
 abstract class ReaderState extends Equatable {
@@ -18,47 +20,57 @@ class ReaderInitial extends ReaderState {
   const ReaderInitial();
 }
 
-// Surah text is loading.
+// Mushaf is loading.
 class ReaderLoading extends ReaderState {
   // Creates the loading state.
   const ReaderLoading();
 }
 
-// Surah loaded and split into mushaf pages.
+// Mushaf loaded and opened on a page.
 class ReaderSuccess extends ReaderState {
-  final SurahTextModel surah;
-  final List<List<AyahModel>> pages;
+  final MushafModel mushaf;
   final int initialPageIndex;
   final int currentPageIndex;
+  final int? selectedSurah;
   final int? selectedAyah;
 
   // Creates the success state.
   const ReaderSuccess({
-    required this.surah,
-    required this.pages,
+    required this.mushaf,
     required this.initialPageIndex,
     required this.currentPageIndex,
+    this.selectedSurah,
     this.selectedAyah,
   });
 
-  // Returns the ayahs on the page currently shown.
-  List<AyahModel> get currentPage => pages[currentPageIndex];
+  // Returns the page currently shown.
+  MushafPageModel get currentPage => mushaf.pages[currentPageIndex];
+
+  // Returns the surah the current page belongs to.
+  MushafSurahModel get currentSurah => mushaf.surah(currentPage.firstWord.surah);
+
+  // Tells whether an ayah is selected.
+  bool get hasSelection => selectedSurah != null && selectedAyah != null;
+
+  // Returns the selected ayah, or null when nothing is selected.
+  AyahModel? get selectedAyahModel => hasSelection ? mushaf.ayah(selectedSurah!, selectedAyah!) : null;
 
   // Returns a copy with the given fields replaced; pass clearSelection to deselect.
-  ReaderSuccess copyWith({int? currentPageIndex, int? selectedAyah, bool clearSelection = false}) => ReaderSuccess(
-        surah: surah,
-        pages: pages,
+  ReaderSuccess copyWith({int? currentPageIndex, int? selectedSurah, int? selectedAyah, bool clearSelection = false}) =>
+      ReaderSuccess(
+        mushaf: mushaf,
         initialPageIndex: initialPageIndex,
         currentPageIndex: currentPageIndex ?? this.currentPageIndex,
+        selectedSurah: clearSelection ? null : (selectedSurah ?? this.selectedSurah),
         selectedAyah: clearSelection ? null : (selectedAyah ?? this.selectedAyah),
       );
 
   // Lists the fields used for equality.
   @override
-  List<Object?> get props => [surah, currentPageIndex, selectedAyah];
+  List<Object?> get props => [mushaf, currentPageIndex, selectedSurah, selectedAyah];
 }
 
-// Surah failed to load; message is a translation key.
+// Mushaf failed to load; message is a translation key.
 class ReaderError extends ReaderState {
   final String message;
 

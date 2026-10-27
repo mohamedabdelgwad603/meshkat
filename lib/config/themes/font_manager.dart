@@ -4,5 +4,5 @@ class FontManager {
 
   static const String ui = 'IBMPlexSansArabic';
   static const String heading = 'Amiri';
-  static const String quran = 'AmiriQuran';
+  static const String quran = 'UthmanicHafs';
 }
