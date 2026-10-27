@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190294660784",
+    "project_id": "meshkat-37efb",
+    "storage_bucket": "meshkat-37efb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190294660784:android:a61205da23b401eab88d75",
+        "android_client_info": {
+          "package_name": "com.mishkat.mishkat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD9CxeSWSQfCz4-7HP5Ahm_qjUl-GOSx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
