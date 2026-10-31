@@ -10,6 +10,7 @@ import 'package:mishkat/core/utills/widgets/app_logo.dart';
 import 'package:mishkat/core/utills/widgets/custom_text.dart';
 import 'package:mishkat/core/utills/widgets/round_icon_button.dart';
 import 'package:mishkat/features/settings/presentation/widgets/credit_card.dart';
+import 'package:mishkat/features/settings/presentation/widgets/credits_version_text.dart';
 
 // Logo header followed by one card per content source.
 class CreditsBody extends StatelessWidget {
@@ -60,12 +61,7 @@ class CreditsBody extends StatelessWidget {
             verticalSpace(12.h),
             const CreditCard(title: TextManager.creditsFontsTitle, body: TextManager.creditsFontsBody),
             verticalSpace(20.h),
-            CustomText(
-              text: TextManager.version,
-              args: const ['1.0.0'],
-              textAlign: TextAlign.center,
-              style: getRegularStyle(context: context, fontSize: 12.sp, color: ColorsManager.grey),
-            ),
+            const CreditsVersionText(),
           ],
         ),
       ),

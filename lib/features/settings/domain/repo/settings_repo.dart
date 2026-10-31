@@ -8,4 +8,7 @@ abstract class SettingsRepo {
 
   // Saves the mushaf font size.
   Future<Either<Failure, double>> saveQuranFontSize(double size);
+
+  // Returns the installed app version.
+  Future<Either<Failure, String>> getAppVersion();
 }

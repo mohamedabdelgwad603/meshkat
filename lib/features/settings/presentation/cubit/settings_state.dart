@@ -6,9 +6,15 @@ class SettingsData extends Equatable {
   final double quranFontSize;
   final List<ReciterModel> reciters;
   final String selectedReciter;
+  final String appVersion;
 
   // Creates the settings data.
-  const SettingsData({required this.quranFontSize, required this.reciters, required this.selectedReciter});
+  const SettingsData({
+    required this.quranFontSize,
+    required this.reciters,
+    required this.selectedReciter,
+    required this.appVersion,
+  });
 
   // Returns the chosen reciter, falling back to the default one.
   ReciterModel get reciter => reciters.firstWhere(
@@ -17,16 +23,22 @@ class SettingsData extends Equatable {
       );
 
   // Returns a copy with the given fields replaced.
-  SettingsData copyWith({double? quranFontSize, List<ReciterModel>? reciters, String? selectedReciter}) =>
+  SettingsData copyWith({
+    double? quranFontSize,
+    List<ReciterModel>? reciters,
+    String? selectedReciter,
+    String? appVersion,
+  }) =>
       SettingsData(
         quranFontSize: quranFontSize ?? this.quranFontSize,
         reciters: reciters ?? this.reciters,
         selectedReciter: selectedReciter ?? this.selectedReciter,
+        appVersion: appVersion ?? this.appVersion,
       );
 
   // Lists the fields used for equality.
   @override
-  List<Object?> get props => [quranFontSize, reciters, selectedReciter];
+  List<Object?> get props => [quranFontSize, reciters, selectedReciter, appVersion];
 }
 
 // Base state of the settings.

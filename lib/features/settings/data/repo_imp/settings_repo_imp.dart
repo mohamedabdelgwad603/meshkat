@@ -21,4 +21,8 @@ class SettingsRepoImp implements SettingsRepo {
         await _local.saveQuranFontSize(size);
         return size;
       });
+
+  // Returns the installed app version.
+  @override
+  Future<Either<Failure, String>> getAppVersion() => safeExecute(request: _local.getAppVersion);
 }

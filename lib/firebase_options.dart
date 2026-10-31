@@ -58,10 +58,10 @@ class DefaultFirebaseOptions {
   );
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC2NPRrbFDgtGIt6R58sRj17dP-cpxqStQ',
-    appId: '1:190294660784:ios:b10e68156d784f8cb88d75',
+    appId: '1:190294660784:ios:e58fe695badbbdd7b88d75',
     messagingSenderId: '190294660784',
     projectId: 'meshkat-37efb',
     storageBucket: 'meshkat-37efb.firebasestorage.app',
-    iosBundleId: 'com.mishkat.mishkat',
+    iosBundleId: 'com.noor.mishkat',
   );
 }

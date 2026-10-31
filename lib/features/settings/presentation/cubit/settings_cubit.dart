@@ -21,12 +21,13 @@ class SettingsCubit extends Cubit<SettingsState> {
   // Returns the cubit provided above the given context.
   static SettingsCubit get(BuildContext context) => BlocProvider.of(context);
 
-  // Loads the saved preferences and the reciter list.
+  // Loads the saved preferences, the reciter list and the app version.
   Future<void> load() async {
     if (isClosed) return;
     emit(const SettingsLoading());
     final fontSize = await _repo.getQuranFontSize();
     final reciters = await _playerRepo.getReciters();
+    final appVersion = await _repo.getAppVersion();
     if (isClosed) return;
     fontSize.fold(
       (failure) => emit(SettingsError(failure.message)),
@@ -34,6 +35,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         quranFontSize: size,
         reciters: reciters.getOrElse(() => const []),
         selectedReciter: _playerRepo.getSelectedReciter(),
+        appVersion: appVersion.getOrElse(() => ''),
       ))),
     );
   }
