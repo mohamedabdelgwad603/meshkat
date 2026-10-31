@@ -56,9 +56,12 @@ class PlayerLocalDataSourceImp implements PlayerLocalDataSource {
   Future<void> cacheReciters(List<ReciterModel> reciters) =>
       _cache.saveJson(CacheKeys.reciters, reciters.map((e) => e.toJson()).toList());
 
-  // Returns the chosen reciter's identifier.
+  // Returns the chosen reciter's identifier, mapping a removed "-2" copy to its original reciter.
   @override
-  String getSelectedReciter() => _cache.readString(CacheKeys.reciter) ?? EndPoints.defaultReciter;
+  String getSelectedReciter() {
+    final saved = _cache.readString(CacheKeys.reciter) ?? EndPoints.defaultReciter;
+    return saved.endsWith('-2') ? saved.substring(0, saved.length - 2) : saved;
+  }
 
   // Saves the chosen reciter's identifier.
   @override

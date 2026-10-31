@@ -45,7 +45,7 @@ class CacheKeys {
   static const String quranFontSize = 'quran_font_size';
   static const String tafsirEdition = 'tafsir_edition';
   static const String tafsirEditions = 'tafsir_editions';
-  static const String reciters = 'reciters';
+  static const String reciters = 'reciters_v3';
 
   // Builds the cache key of a surah's text.
   static String surahText(int number) => 'surah_text_$number';
