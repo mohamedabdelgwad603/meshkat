@@ -11,4 +11,13 @@ abstract class SettingsRepo {
 
   // Returns the installed app version.
   Future<Either<Failure, String>> getAppVersion();
+
+  // Returns this platform's store link.
+  Future<Either<Failure, String>> getStoreUrl();
+
+  // Opens the app's review page on this platform's store.
+  Future<Either<Failure, Unit>> rateApp();
+
+  // Opens a WhatsApp chat with the support team and the given message.
+  Future<Either<Failure, Unit>> contactUs(String message);
 }
