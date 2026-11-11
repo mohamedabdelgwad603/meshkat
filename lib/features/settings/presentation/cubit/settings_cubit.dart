@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mishkat/features/player/data/models/reciter_model.dart';
@@ -58,6 +59,17 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsSuccess(current.data.copyWith(selectedReciter: reciter.identifier)));
     await _playerCubit.changeReciter(reciter);
   }
+
+  // Returns this platform's store link, or the failure message key in a Left.
+  Future<Either<String, String>> getStoreUrl() async =>
+      (await _repo.getStoreUrl()).leftMap((failure) => failure.message);
+
+  // Opens the store review page and returns the failure message key when it could not.
+  Future<String?> rateApp() async => (await _repo.rateApp()).fold((failure) => failure.message, (_) => null);
+
+  // Opens a WhatsApp chat with the support team and returns the failure message key when it could not.
+  Future<String?> contactUs(String message) async =>
+      (await _repo.contactUs(message)).fold((failure) => failure.message, (_) => null);
 
   // Returns the current mushaf font size or the default.
   double get quranFontSize {

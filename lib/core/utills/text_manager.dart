@@ -132,6 +132,13 @@ class TextManager {
   static const String sourcesTitle = 'sourcesTitle';
   static const String basmala = 'basmala';
   static const String version = 'version';
+  static const String shareApp = 'shareApp';
+  static const String rateApp = 'rateApp';
+  static const String contactUs = 'contactUs';
+  static const String shareAppMessage = 'shareAppMessage';
+  static const String contactUsMessage = 'contactUsMessage';
+  static const String storeLinkUnavailable = 'storeLinkUnavailable';
+  static const String linkOpenFailed = 'linkOpenFailed';
 
   // Credits
   static const String creditsQuranTitle = 'creditsQuranTitle';
