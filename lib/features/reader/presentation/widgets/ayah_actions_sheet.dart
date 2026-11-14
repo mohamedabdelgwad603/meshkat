@@ -22,6 +22,8 @@ import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
 import 'package:mishkat/features/reader/presentation/widgets/ayah_action_button.dart';
 import 'package:mishkat/features/reader/presentation/widgets/tafsir_preview_card.dart';
+import 'package:mishkat/features/reflections/data/requests_params/save_reflection_params.dart';
+import 'package:mishkat/features/reflections/presentation/widgets/reflect_action_button.dart';
 import 'package:mishkat/features/tafsir/presentation/cubit/tafsir_cubit.dart';
 
 // Bottom panel that slides up when an ayah is selected, with actions and a tafsir preview.
@@ -131,7 +133,19 @@ class _SheetContent extends StatelessWidget {
             ],
           ),
           verticalSpace(14.h),
-          _ActionsGrid(surahNumber: surahNumber, surahName: isArabic ? surahName : surahEnglishName, ayah: ayah),
+          _ActionsGrid(
+            surahNumber: surahNumber,
+            surahName: isArabic ? surahName : surahEnglishName,
+            ayah: ayah,
+            reflectionTarget: SaveReflectionParams(
+              surahNumber: surahNumber,
+              surahName: surahName,
+              surahEnglishName: surahEnglishName,
+              ayahNumber: ayah.numberInSurah,
+              ayahText: ayah.text,
+              note: '',
+            ),
+          ),
           verticalSpace(14.h),
           BlocProvider(
             create: (_) => getIt<TafsirCubit>()..init(surahNumber, ayah.numberInSurah),
@@ -143,16 +157,22 @@ class _SheetContent extends StatelessWidget {
   }
 }
 
-// Five actions: tafsir, listen, copy, share and save.
+// Six actions: tafsir, listen, copy, share, save and reflect.
 class _ActionsGrid extends StatelessWidget {
   final int surahNumber;
   final String surahName;
   final AyahModel ayah;
+  final SaveReflectionParams reflectionTarget;
 
   // Creates the grid.
-  const _ActionsGrid({required this.surahNumber, required this.surahName, required this.ayah});
+  const _ActionsGrid({
+    required this.surahNumber,
+    required this.surahName,
+    required this.ayah,
+    required this.reflectionTarget,
+  });
 
-  // Builds the five action buttons.
+  // Builds the six action buttons.
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -192,6 +212,7 @@ class _ActionsGrid extends StatelessWidget {
             );
           },
         ),
+        ReflectActionButton(target: reflectionTarget),
       ],
     );
   }

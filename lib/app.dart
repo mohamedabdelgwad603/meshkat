@@ -10,6 +10,7 @@ import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/core/utills/widgets/push_language_sync.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.dart';
 import 'package:mishkat/features/player/presentation/cubit/player_cubit.dart';
+import 'package:mishkat/features/reflections/presentation/cubit/reflections_cubit.dart';
 import 'package:mishkat/features/reminders/presentation/cubit/reminders_cubit.dart';
 import 'package:mishkat/features/reminders/presentation/widgets/daily_reminders_scheduler.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart';
@@ -25,6 +26,7 @@ class MishkatApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: getIt<BookmarksCubit>()),
+        BlocProvider.value(value: getIt<ReflectionsCubit>()),
         BlocProvider.value(value: getIt<SettingsCubit>()),
         BlocProvider.value(value: getIt<PlayerCubit>()),
         BlocProvider(create: (_) => getIt<RemindersCubit>()),

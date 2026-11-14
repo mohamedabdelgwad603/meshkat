@@ -5,6 +5,7 @@ import 'package:mishkat/core/services/dependancy_injection_methods/core_di.dart'
 import 'package:mishkat/core/services/dependancy_injection_methods/home_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/player_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/reader_di.dart';
+import 'package:mishkat/core/services/dependancy_injection_methods/reflections_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/reminders_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/settings_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/splash_di.dart';
@@ -18,6 +19,7 @@ Future<void> initDi() async {
   await setupCoreDi();
   setupSurahsDi();
   setupBookmarksDi();
+  setupReflectionsDi();
   setupReaderDi();
   setupTafsirDi();
   setupPlayerDi();

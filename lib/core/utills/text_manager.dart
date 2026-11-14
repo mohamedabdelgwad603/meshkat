@@ -118,6 +118,26 @@ class TextManager {
   static const String loopSurah = 'loopSurah';
   static const String speed = 'speed';
 
+  // Reflections
+  static const String reflectAction = 'reflectAction';
+  static const String reflectedAction = 'reflectedAction';
+  static const String bookmarksTab = 'bookmarksTab';
+  static const String reflectionsTab = 'reflectionsTab';
+  static const String newReflection = 'newReflection';
+  static const String editReflection = 'editReflection';
+  static const String reflectionHint = 'reflectionHint';
+  static const String saveReflection = 'saveReflection';
+  static const String deleteReflection = 'deleteReflection';
+  static const String deleteReflectionTitle = 'deleteReflectionTitle';
+  static const String deleteReflectionBody = 'deleteReflectionBody';
+  static const String cancel = 'cancel';
+  static const String reflectionSaved = 'reflectionSaved';
+  static const String reflectionDeleted = 'reflectionDeleted';
+  static const String noReflections = 'noReflections';
+  static const String noReflectionsHint = 'noReflectionsHint';
+  static const String openInMushaf = 'openInMushaf';
+  static const String editedOn = 'editedOn';
+
   // Saved
   static const String savedTitle = 'savedTitle';
   static const String removeBookmark = 'removeBookmark';
