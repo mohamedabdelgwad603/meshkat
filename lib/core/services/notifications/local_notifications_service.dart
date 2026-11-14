@@ -13,6 +13,11 @@ class LocalNotificationsService {
   static const String _channelName = 'Daily reminders';
   static const String _channelDescription = 'Daily dhikr and Quran reminders';
 
+  // Channel used for messages sent from Firebase; its id is also set in AndroidManifest.xml.
+  static const String pushChannelId = 'announcements';
+  static const String _pushChannelName = 'Announcements';
+  static const String _pushChannelDescription = 'News and messages from Mishkat';
+
   // Loads the time zone database, sets the device zone and initializes the plugin.
   Future<void> init() async {
     tz.initializeTimeZones();
@@ -32,6 +37,14 @@ class LocalNotificationsService {
         ),
       ),
     );
+    await _plugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(const AndroidNotificationChannel(
+          pushChannelId,
+          _pushChannelName,
+          description: _pushChannelDescription,
+          importance: Importance.high,
+        ));
   }
 
   // Asks the user for permission to show notifications and returns whether it was granted.
@@ -75,6 +88,27 @@ class LocalNotificationsService {
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
+  // Shows a notification right away on the announcements channel.
+  Future<void> showNow({required int id, required String title, required String body}) {
+    return _plugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          pushChannelId,
+          _pushChannelName,
+          channelDescription: _pushChannelDescription,
+          importance: Importance.high,
+          priority: Priority.high,
+          color: ColorsManager.secondry,
+          visibility: NotificationVisibility.public,
+        ),
+        iOS: DarwinNotificationDetails(presentAlert: true, presentBanner: true, presentList: true, presentSound: true),
+      ),
     );
   }
 

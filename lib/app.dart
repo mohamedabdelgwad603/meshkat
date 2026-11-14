@@ -7,6 +7,7 @@ import 'package:mishkat/config/routes/route_manager.dart';
 import 'package:mishkat/config/themes/app_theme.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/init_di.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
+import 'package:mishkat/core/utills/widgets/push_language_sync.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.dart';
 import 'package:mishkat/features/player/presentation/cubit/player_cubit.dart';
 import 'package:mishkat/features/reminders/presentation/cubit/reminders_cubit.dart';
@@ -42,7 +43,7 @@ class MishkatApp extends StatelessWidget {
           initialRoute: PageName.splash,
           onGenerateInitialRoutes: (name) => [RouteManager.onGenerateRoute(RouteSettings(name: name))],
           onGenerateRoute: RouteManager.onGenerateRoute,
-          builder: (context, child) => DailyRemindersScheduler(child: child!),
+          builder: (context, child) => PushLanguageSync(child: DailyRemindersScheduler(child: child!)),
         ),
       ),
     );

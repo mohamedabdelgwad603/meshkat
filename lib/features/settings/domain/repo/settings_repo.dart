@@ -18,6 +18,6 @@ abstract class SettingsRepo {
   // Opens the app's review page on this platform's store.
   Future<Either<Failure, Unit>> rateApp();
 
-  // Opens a WhatsApp chat with the support team and the given message.
-  Future<Either<Failure, Unit>> contactUs(String message);
+  // Opens the given link, such as a social media page, outside the app.
+  Future<Either<Failure, Unit>> openLink(String url);
 }

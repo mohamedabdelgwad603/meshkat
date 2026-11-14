@@ -67,9 +67,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   // Opens the store review page and returns the failure message key when it could not.
   Future<String?> rateApp() async => (await _repo.rateApp()).fold((failure) => failure.message, (_) => null);
 
-  // Opens a WhatsApp chat with the support team and returns the failure message key when it could not.
-  Future<String?> contactUs(String message) async =>
-      (await _repo.contactUs(message)).fold((failure) => failure.message, (_) => null);
+  // Opens the given link outside the app and returns the failure message key when it could not.
+  Future<String?> openLink(String url) async => (await _repo.openLink(url)).fold((failure) => failure.message, (_) => null);
 
   // Returns the current mushaf font size or the default.
   double get quranFontSize {

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:mishkat/app.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/init_di.dart';
+import 'package:mishkat/core/services/notifications/push_notifications_service.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:mishkat/firebase_options.dart';
@@ -23,6 +24,7 @@ Future<void> main() async {
   await initDi();
   getIt<BookmarksCubit>().load();
   getIt<SettingsCubit>().load();
+  getIt<PushNotificationsService>().init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(

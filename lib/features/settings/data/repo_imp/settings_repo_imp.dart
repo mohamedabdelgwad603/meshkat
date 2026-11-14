@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mishkat/core/api/end_points.dart';
 import 'package:mishkat/core/errors/exceptions.dart';
 import 'package:mishkat/core/errors/failure.dart';
 import 'package:mishkat/core/errors/safe_execute.dart';
@@ -43,10 +42,10 @@ class SettingsRepoImp implements SettingsRepo {
         return unit;
       });
 
-  // Opens a WhatsApp chat with the support team and the given message.
+  // Opens the given link, such as a social media page, outside the app.
   @override
-  Future<Either<Failure, Unit>> contactUs(String message) => safeExecute(request: () async {
-        await _remote.openExternal(EndPoints.whatsappChat(EndPoints.supportWhatsapp, message));
+  Future<Either<Failure, Unit>> openLink(String url) => safeExecute(request: () async {
+        await _remote.openExternal(url);
         return unit;
       });
 

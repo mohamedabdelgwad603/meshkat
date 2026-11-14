@@ -17,6 +17,7 @@ import 'package:mishkat/features/settings/presentation/widgets/language_selector
 import 'package:mishkat/features/settings/presentation/widgets/reciter_setting_tile.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_card.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_link_tile.dart';
+import 'package:mishkat/features/settings/presentation/widgets/social_links_card.dart';
 
 // Scrollable list of settings cards.
 class SettingsBody extends StatelessWidget {
@@ -60,6 +61,8 @@ class SettingsBody extends StatelessWidget {
               ),
               verticalSpace(12.h),
               const AppActionsCard(),
+              verticalSpace(12.h),
+              const SocialLinksCard(),
             ],
           );
         },

@@ -31,12 +31,9 @@ class EndPoints {
   // Returns one ayah (global number or "surah:ayah") in the given edition.
   static String ayah(String reference, String edition) => '/ayah/$reference/$edition';
 
-  // WhatsApp number of the support team, in international format without the plus sign.
-  static const String supportWhatsapp = '201123283776';
-
-  // Returns a WhatsApp chat link with the given number and a prefilled message.
-  static String whatsappChat(String phone, String message) =>
-      'https://wa.me/$phone?text=${Uri.encodeComponent(message)}';
+  // Official social media pages of the app.
+  static const String instagramPage = 'https://www.instagram.com/meshkat1244';
+  static const String facebookPage = 'https://www.facebook.com/mshkat.874925';
 
   // Returns the EveryAyah audio URL of one ayah, named by zero-padded surah and ayah numbers.
   static String everyAyahAudio(String folder, int surah, int ayah) =>

@@ -1,7 +1,7 @@
 name: mishkat
 description: "مِشكاة — Quran reader with tafsir and recitations."
 publish_to: 'none'
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ^3.6.0
@@ -41,6 +41,8 @@ dependencies:
   firebase_remote_config: ^7.0.1
   package_info_plus: ^10.2.2
   url_launcher: ^6.3.2
+  firebase_messaging: ^17.0.1
+  font_awesome_flutter: ^11.0.0
 
 dev_dependencies:
   flutter_test:

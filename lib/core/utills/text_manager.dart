@@ -135,8 +135,10 @@ class TextManager {
   static const String shareApp = 'shareApp';
   static const String rateApp = 'rateApp';
   static const String contactUs = 'contactUs';
+  static const String contactUsSubtitle = 'contactUsSubtitle';
+  static const String instagram = 'instagram';
+  static const String facebook = 'facebook';
   static const String shareAppMessage = 'shareAppMessage';
-  static const String contactUsMessage = 'contactUsMessage';
   static const String storeLinkUnavailable = 'storeLinkUnavailable';
   static const String linkOpenFailed = 'linkOpenFailed';
 

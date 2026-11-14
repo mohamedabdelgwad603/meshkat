@@ -36,6 +36,14 @@ class ColorsManager {
   static const Color purple = Color(0xFF6B4E8A);
   static const Color lightBlue = Color(0xFFDCE8F2);
 
+  // Social media brand colors
+  static const Color facebook = Color(0xFF1877F2);
+  static const Color instagramYellow = Color(0xFFFEDA75);
+  static const Color instagramOrange = Color(0xFFFA7E1E);
+  static const Color instagramPink = Color(0xFFD62976);
+  static const Color instagramPurple = Color(0xFF962FBF);
+  static const Color instagramBlue = Color(0xFF4F5BD5);
+
   // Translucent overlays
   static const Color whiteOverlay = Color(0x0FFFFFFF);
   static const Color whiteBorder = Color(0x24FFFFFF);

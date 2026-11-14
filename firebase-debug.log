@@ -1,0 +1,37 @@
+[debug] [2026-11-11T18:59:50.254Z] ----------------------------------------------------------------------
+[debug] [2026-11-11T18:59:50.257Z] Command:       /usr/local/bin/firebase /Users/test/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase remoteconfig:get --project meshkat-37efb --debug
+[debug] [2026-11-11T18:59:50.258Z] CLI Version:   14.7.0
+[debug] [2026-11-11T18:59:50.258Z] Platform:      darwin
+[debug] [2026-11-11T18:59:50.258Z] Node Version:  v20.18.2
+[debug] [2026-11-11T18:59:50.258Z] Time:          Wed Nov 11 2026 20:59:50 GMT+0200 (Eastern European Standard Time)
+[debug] [2026-11-11T18:59:50.258Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-11-11T18:59:50.449Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-11-11T18:59:50.453Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-11-11T18:59:50.453Z] > authorizing via signed-in user (mohamedabdelgwad108@gmail.com)
+[debug] [2026-11-11T18:59:50.453Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-11-11T18:59:50.453Z] > authorizing via signed-in user (mohamedabdelgwad108@gmail.com)
+[debug] [2026-11-11T18:59:50.454Z] [iam] checking project meshkat-37efb for permissions ["cloudconfig.configs.get","firebase.projects.get"]
+[debug] [2026-11-11T18:59:50.455Z] Checked if tokens are valid: true, expires at: 1794427181088
+[debug] [2026-11-11T18:59:50.455Z] Checked if tokens are valid: true, expires at: 1794427181088
+[debug] [2026-11-11T18:59:50.456Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/meshkat-37efb:testIamPermissions [none]
+[debug] [2026-11-11T18:59:50.456Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/meshkat-37efb:testIamPermissions x-goog-quota-user=projects/meshkat-37efb
+[debug] [2026-11-11T18:59:50.456Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/meshkat-37efb:testIamPermissions {"permissions":["cloudconfig.configs.get","firebase.projects.get"]}
+[debug] [2026-11-11T18:59:52.296Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/meshkat-37efb:testIamPermissions 200
+[debug] [2026-11-11T18:59:52.296Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/meshkat-37efb:testIamPermissions {}
+[debug] [2026-11-11T18:59:52.296Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project meshkat-37efb:
+
+  cloudconfig.configs.get
+  firebase.projects.get
+[debug] [2026-11-11T18:59:52.297Z] Checked if tokens are valid: true, expires at: 1794427181088
+[debug] [2026-11-11T18:59:52.297Z] Checked if tokens are valid: true, expires at: 1794427181088
+[debug] [2026-11-11T18:59:52.297Z] >>> [apiv2][query] GET https://firebaseremoteconfig.googleapis.com/v1/projects/meshkat-37efb/remoteConfig 
+[debug] [2026-11-11T18:59:53.112Z] <<< [apiv2][status] GET https://firebaseremoteconfig.googleapis.com/v1/projects/meshkat-37efb/remoteConfig 403
+[debug] [2026-11-11T18:59:53.112Z] <<< [apiv2][body] GET https://firebaseremoteconfig.googleapis.com/v1/projects/meshkat-37efb/remoteConfig {"error":{"code":403,"message":"[AUTHORIZATION_ERROR]: User does not have the following permission: GET_TEMPLATE","status":"PERMISSION_DENIED"}}
+[debug] [2026-11-11T18:59:53.113Z] Request to https://firebaseremoteconfig.googleapis.com/v1/projects/meshkat-37efb/remoteConfig had HTTP Error: 403, [AUTHORIZATION_ERROR]: User does not have the following permission: GET_TEMPLATE
+[debug] [2026-11-11T18:59:53.446Z] FirebaseError: Request to https://firebaseremoteconfig.googleapis.com/v1/projects/meshkat-37efb/remoteConfig had HTTP Error: 403, [AUTHORIZATION_ERROR]: User does not have the following permission: GET_TEMPLATE
+    at responseToError (/Users/test/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/responseToError.js:52:12)
+    at RetryOperation._fn (/Users/test/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase Remote Config template for project meshkat-37efb. 

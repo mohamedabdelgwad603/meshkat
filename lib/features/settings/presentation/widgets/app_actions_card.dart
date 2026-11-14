@@ -11,12 +11,12 @@ import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart
 import 'package:mishkat/features/settings/presentation/widgets/settings_card.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_link_tile.dart';
 
-// Card with the share, rate and contact actions of the app.
+// Card with the share and rate actions of the app.
 class AppActionsCard extends StatelessWidget {
   // Creates the card.
   const AppActionsCard({super.key});
 
-  // Builds the three action rows separated by dividers.
+  // Builds the two action rows separated by a divider.
   @override
   Widget build(BuildContext context) {
     return SettingsCard(
@@ -34,12 +34,6 @@ class AppActionsCard extends StatelessWidget {
             icon: Icons.star_outline_rounded,
             title: TextManager.rateApp,
             onTap: () => _rateApp(context),
-          ),
-          Divider(height: 16.h, color: ColorsManager.greyLight),
-          SettingsLinkTile(
-            icon: Icons.chat_outlined,
-            title: TextManager.contactUs,
-            onTap: () => _contactUs(context),
           ),
         ],
       ),
@@ -59,13 +53,6 @@ class AppActionsCard extends StatelessWidget {
   // Opens the app's review page on the store.
   Future<void> _rateApp(BuildContext context) async {
     final error = await SettingsCubit.get(context).rateApp();
-    if (error != null && context.mounted) _showError(context, error);
-  }
-
-  // Opens a WhatsApp chat with the support team and a prefilled greeting.
-  Future<void> _contactUs(BuildContext context) async {
-    final message = TextManager.contactUsMessage.tr(context: context);
-    final error = await SettingsCubit.get(context).contactUs(message);
     if (error != null && context.mounted) _showError(context, error);
   }
 
