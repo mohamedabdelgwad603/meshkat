@@ -24,6 +24,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   int? _lastIndex;
   int _playsOfCurrent = 1;
   bool _manualJump = false;
+  bool _repeatSeekPending = false;
   double _lastReportedProgress = 0;
   int? _pendingSurah;
   bool _isCompleted = false;
@@ -275,10 +276,11 @@ class PlayerCubit extends Cubit<PlayerState> {
 
   // Mirrors play and buffering flags and repeats the last ayah when the surah ends.
   void _onStatus(PlaybackStatus status) {
+    final justCompleted = status.isCompleted && !_isCompleted;
     _isCompleted = status.isCompleted;
     final data = _data;
     if (data == null) return;
-    if (status.isCompleted && data.currentIndex == data.totalAyahs - 1 && _playsOfCurrent < data.repeatTimes) {
+    if (justCompleted && data.currentIndex == data.totalAyahs - 1 && _playsOfCurrent < data.repeatTimes) {
       _playsOfCurrent++;
       _audio.seek(Duration.zero, index: data.currentIndex).then((_) => _audio.play());
       return;
@@ -290,10 +292,12 @@ class PlayerCubit extends Cubit<PlayerState> {
   void _onIndex(int? index) {
     final data = _data;
     if (index == null || data == null) return;
+    if (_repeatSeekPending && index != _lastIndex) return;
     final advancedNaturally = !_manualJump && _lastIndex != null && index == _lastIndex! + 1;
     if (advancedNaturally && _playsOfCurrent < data.repeatTimes) {
       _playsOfCurrent++;
-      _audio.seek(Duration.zero, index: _lastIndex);
+      _repeatSeekPending = true;
+      _audio.seek(Duration.zero, index: _lastIndex).whenComplete(() => _repeatSeekPending = false);
       return;
     }
     if (index != _lastIndex) _playsOfCurrent = 1;

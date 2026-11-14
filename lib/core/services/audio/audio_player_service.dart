@@ -55,8 +55,8 @@ class AudioPlayerService {
   // Emits the duration of the current track.
   Stream<Duration?> get durationStream => _player.durationStream;
 
-  // Emits the index of the current track in the playlist.
-  Stream<int?> get currentIndexStream => _player.currentIndexStream;
+  // Emits the index of the current track only when it changes, since just_audio repeats it on every playback event.
+  Stream<int?> get currentIndexStream => _player.currentIndexStream.distinct();
 
   // Returns the index of the current track.
   int? get currentIndex => _player.currentIndex;
