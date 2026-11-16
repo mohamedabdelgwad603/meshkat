@@ -118,6 +118,48 @@ class TextManager {
   static const String loopSurah = 'loopSurah';
   static const String speed = 'speed';
 
+  // Memorization
+  static const String quickHifz = 'quickHifz';
+  static const String hifzTitle = 'hifzTitle';
+  static const String hifzSubtitle = 'hifzSubtitle';
+  static const String hifzSurah = 'hifzSurah';
+  static const String hifzChooseSurah = 'hifzChooseSurah';
+  static const String hifzAyahCount = 'hifzAyahCount';
+  static const String hifzRange = 'hifzRange';
+  static const String hifzFrom = 'hifzFrom';
+  static const String hifzTo = 'hifzTo';
+  static const String hifzRangeLength = 'hifzRangeLength';
+  static const String hifzAyahRepeat = 'hifzAyahRepeat';
+  static const String hifzRangeRepeat = 'hifzRangeRepeat';
+  static const String hifzRangeRepeatHint = 'hifzRangeRepeatHint';
+  static const String hifzOff = 'hifzOff';
+  static const String hifzRecitePause = 'hifzRecitePause';
+  static const String hifzRecitePauseHint = 'hifzRecitePauseHint';
+  static const String hifzSpeed = 'hifzSpeed';
+  static const String hifzProgress = 'hifzProgress';
+  static const String hifzStart = 'hifzStart';
+  static const String hifzTest = 'hifzTest';
+  static const String hifzAyahOf = 'hifzAyahOf';
+  static const String hifzRepetitionOf = 'hifzRepetitionOf';
+  static const String hifzReviewOf = 'hifzReviewOf';
+  static const String hifzListen = 'hifzListen';
+  static const String hifzReciteNow = 'hifzReciteNow';
+  static const String hifzPaused = 'hifzPaused';
+  static const String hifzPrevious = 'hifzPrevious';
+  static const String hifzNext = 'hifzNext';
+  static const String hifzRestart = 'hifzRestart';
+  static const String hifzFinishedTitle = 'hifzFinishedTitle';
+  static const String hifzFinishedBody = 'hifzFinishedBody';
+  static const String hifzTestHint = 'hifzTestHint';
+  static const String hifzFirstWordHint = 'hifzFirstWordHint';
+  static const String hifzRevealWord = 'hifzRevealWord';
+  static const String hifzRevealAyah = 'hifzRevealAyah';
+  static const String hifzHide = 'hifzHide';
+  static const String hifzMemorized = 'hifzMemorized';
+  static const String hifzNeedsReview = 'hifzNeedsReview';
+  static const String hifzScore = 'hifzScore';
+  static const String hifzTestAgain = 'hifzTestAgain';
+
   // Reflections
   static const String reflectAction = 'reflectAction';
   static const String reflectedAction = 'reflectedAction';

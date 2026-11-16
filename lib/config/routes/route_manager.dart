@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mishkat/config/routes/page_name.dart';
 import 'package:mishkat/config/routes/route_arguments.dart';
+import 'package:mishkat/features/hifz/data/requests_params/hifz_session_params.dart';
+import 'package:mishkat/features/hifz/presentation/screens/hifz_session_screen.dart';
+import 'package:mishkat/features/hifz/presentation/screens/hifz_setup_screen.dart';
+import 'package:mishkat/features/hifz/presentation/screens/hifz_test_screen.dart';
 import 'package:mishkat/features/layout/presentation/screens/main_layout_screen.dart';
 import 'package:mishkat/features/player/presentation/screens/player_screen.dart';
 import 'package:mishkat/features/reader/presentation/screens/reader_screen.dart';
@@ -28,6 +32,12 @@ class RouteManager {
         return _getPageTransition(PlayerScreen(args: args), settings, fromBottom: true);
       case PageName.credits:
         return _getPageTransition(const CreditsScreen(), settings);
+      case PageName.hifz:
+        return _getPageTransition(HifzSetupScreen(args: settings.arguments as HifzArgs?), settings);
+      case PageName.hifzSession:
+        return _getPageTransition(HifzSessionScreen(params: settings.arguments as HifzSessionParams), settings);
+      case PageName.hifzTest:
+        return _getPageTransition(HifzTestScreen(params: settings.arguments as HifzSessionParams), settings);
       default:
         return _getPageTransition(const MainLayoutScreen(), settings);
     }

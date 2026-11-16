@@ -42,6 +42,8 @@ class CacheKeys {
   static const String lastRead = 'last_read';
   static const String bookmarks = 'bookmarks';
   static const String reflections = 'reflections';
+  static const String hifzSettings = 'hifz_settings';
+  static const String hifzMemorized = 'hifz_memorized';
   static const String reciter = 'reciter';
   static const String quranFontSize = 'quran_font_size';
   static const String tafsirEdition = 'tafsir_edition';

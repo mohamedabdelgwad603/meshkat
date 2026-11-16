@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/app_update_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/bookmarks_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/core_di.dart';
+import 'package:mishkat/core/services/dependancy_injection_methods/hifz_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/home_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/player_di.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/reader_di.dart';
@@ -28,4 +29,5 @@ Future<void> initDi() async {
   setupSplashDi();
   setupRemindersDi();
   setupAppUpdateDi();
+  setupHifzDi();
 }

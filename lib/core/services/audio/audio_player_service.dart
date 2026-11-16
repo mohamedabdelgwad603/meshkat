@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -32,9 +34,14 @@ class PlaybackStatus {
   const PlaybackStatus({required this.isPlaying, required this.isBuffering, required this.isCompleted});
 }
 
+// Features that can drive the shared player; only one of them owns it at a time.
+enum AudioOwner { player, hifz }
+
 // Wraps just_audio so the app has a single player with background and lock-screen support.
 class AudioPlayerService {
   final AudioPlayer _player = AudioPlayer();
+  final StreamController<AudioOwner> _ownerController = StreamController<AudioOwner>.broadcast();
+  AudioOwner _owner = AudioOwner.player;
 
   // Configures the audio session for spoken-word playback.
   Future<void> init() async {
@@ -93,4 +100,20 @@ class AudioPlayerService {
 
   // Turns looping of the whole playlist on or off.
   Future<void> setLoopAll(bool loop) => _player.setLoopMode(loop ? LoopMode.all : LoopMode.off);
+
+  // Changes the playback volume between 0 and 1.
+  Future<void> setVolume(double volume) => _player.setVolume(volume);
+
+  // Returns the feature that currently drives the player.
+  AudioOwner get owner => _owner;
+
+  // Emits whenever another feature takes over the player.
+  Stream<AudioOwner> get ownerStream => _ownerController.stream;
+
+  // Hands the player to the given feature so the previous owner stops reacting to its events.
+  void claim(AudioOwner owner) {
+    if (_owner == owner) return;
+    _owner = owner;
+    _ownerController.add(owner);
+  }
 }

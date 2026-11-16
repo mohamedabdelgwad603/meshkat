@@ -25,6 +25,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   int _playsOfCurrent = 1;
   bool _manualJump = false;
   bool _repeatSeekPending = false;
+  bool _restoring = false;
   double _lastReportedProgress = 0;
   int? _pendingSurah;
   bool _isCompleted = false;
@@ -37,7 +38,8 @@ class PlayerCubit extends Cubit<PlayerState> {
   PlayerCubit(this._repo, this._readerRepo, this._audio) : super(const PlayerInitial()) {
     _subscriptions
       ..add(_audio.statusStream.listen(_onStatus))
-      ..add(_audio.currentIndexStream.listen(_onIndex));
+      ..add(_audio.currentIndexStream.listen(_onIndex))
+      ..add(_audio.ownerStream.listen(_onOwnerChanged));
   }
 
   // Returns the cubit provided above the given context.
@@ -57,6 +59,7 @@ class PlayerCubit extends Cubit<PlayerState> {
       return _loadSurah(fallbackSurah, startIndex: 0, autoPlay: false);
     }
     if (current is PlayerSuccess && current.data.surah.number == surahNumber) {
+      await _reclaim();
       await jumpToAyah(startAyah);
       _audio.play();
       return;
@@ -71,6 +74,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   Future<void> togglePlay() async {
     final data = _data;
     if (data == null) return;
+    await _reclaim();
     if (_audio.isPlaying && !_isCompleted) {
       await _audio.pause();
       return;
@@ -86,6 +90,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   Future<void> next() async {
     final data = _data;
     if (data == null || data.currentIndex >= data.totalAyahs - 1) return;
+    await _reclaim();
     _manualJump = true;
     await _audio.seek(Duration.zero, index: data.currentIndex + 1);
   }
@@ -94,6 +99,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   Future<void> previous() async {
     final data = _data;
     if (data == null) return;
+    await _reclaim();
     if (_audio.position > const Duration(seconds: 3) || data.currentIndex == 0) {
       await _audio.seek(Duration.zero, index: data.currentIndex);
     } else {
@@ -106,20 +112,24 @@ class PlayerCubit extends Cubit<PlayerState> {
   Future<void> jumpToAyah(int ayahNumber) async {
     final data = _data;
     if (data == null) return;
+    await _reclaim();
     final target = (ayahNumber - 1).clamp(0, data.totalAyahs - 1).toInt();
     if (target != data.currentIndex) _manualJump = true;
     await _audio.seek(Duration.zero, index: target);
   }
 
   // Seeks inside the current ayah.
-  Future<void> seekTo(Duration position) => _audio.seek(position);
+  Future<void> seekTo(Duration position) async {
+    if (_audio.owner != AudioOwner.player) return;
+    await _audio.seek(position);
+  }
 
   // Cycles the playback speed.
   Future<void> cycleSpeed() async {
     final data = _data;
     if (data == null) return;
     final next = _speeds[(_speeds.indexOf(data.speed) + 1) % _speeds.length];
-    await _audio.setSpeed(next);
+    if (_audio.owner == AudioOwner.player) await _audio.setSpeed(next);
     _update((d) => d.copyWith(speed: next));
   }
 
@@ -136,7 +146,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   Future<void> toggleLoopSurah() async {
     final data = _data;
     if (data == null) return;
-    await _audio.setLoopAll(!data.loopSurah);
+    if (_audio.owner == AudioOwner.player) await _audio.setLoopAll(!data.loopSurah);
     _update((d) => d.copyWith(loopSurah: !d.loopSurah));
   }
 
@@ -183,9 +193,11 @@ class PlayerCubit extends Cubit<PlayerState> {
       (_) async {
         final latest = _data;
         if (latest == null) return;
-        final wasPlaying = _audio.isPlaying;
-        await _setPlaylist(latest.surah, latest.reciter, latest.ayahs, latest.currentIndex, _audio.position);
-        if (wasPlaying) _audio.play();
+        if (_audio.owner == AudioOwner.player) {
+          final wasPlaying = _audio.isPlaying;
+          await _setPlaylist(latest.surah, latest.reciter, latest.ayahs, latest.currentIndex, _audio.position);
+          if (wasPlaying) _audio.play();
+        }
         _update((d) => d.copyWith(clearDownload: true, isDownloaded: true));
       },
     );
@@ -223,6 +235,8 @@ class PlayerCubit extends Cubit<PlayerState> {
     final index = startIndex.clamp(0, loadedAyahs.length - 1).toInt();
 
     try {
+      _audio.claim(AudioOwner.player);
+      await _audio.setVolume(1);
       final isDownloaded = await _setPlaylist(loadedSurah, reciter, loadedAyahs, index, Duration.zero);
       final speed = prev?.speed ?? 1;
       final loop = prev?.loopSurah ?? false;
@@ -276,6 +290,7 @@ class PlayerCubit extends Cubit<PlayerState> {
 
   // Mirrors play and buffering flags and repeats the last ayah when the surah ends.
   void _onStatus(PlaybackStatus status) {
+    if (_audio.owner != AudioOwner.player) return;
     final justCompleted = status.isCompleted && !_isCompleted;
     _isCompleted = status.isCompleted;
     final data = _data;
@@ -291,7 +306,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   // Tracks the current ayah and replays it until it was heard the chosen number of times.
   void _onIndex(int? index) {
     final data = _data;
-    if (index == null || data == null) return;
+    if (index == null || data == null || _restoring || _audio.owner != AudioOwner.player) return;
     if (_repeatSeekPending && index != _lastIndex) return;
     final advancedNaturally = !_manualJump && _lastIndex != null && index == _lastIndex! + 1;
     if (advancedNaturally && _playsOfCurrent < data.repeatTimes) {
@@ -304,6 +319,34 @@ class PlayerCubit extends Cubit<PlayerState> {
     _manualJump = false;
     _lastIndex = index;
     _update((d) => d.copyWith(currentIndex: index));
+  }
+
+  // Shows the player as paused when another feature takes over the shared audio.
+  void _onOwnerChanged(AudioOwner owner) {
+    if (owner == AudioOwner.player) return;
+    _repeatSeekPending = false;
+    _update((d) => d.copyWith(isPlaying: false, isBuffering: false));
+  }
+
+  // Takes the shared audio back from another feature and restores this surah's playlist at the current ayah.
+  Future<void> _reclaim() async {
+    if (_audio.owner == AudioOwner.player) return;
+    _audio.claim(AudioOwner.player);
+    final data = _data;
+    if (data == null) return;
+    _restoring = true;
+    try {
+      await _audio.setVolume(1);
+      await _setPlaylist(data.surah, data.reciter, data.ayahs, data.currentIndex, Duration.zero);
+      await _audio.setSpeed(data.speed);
+      await _audio.setLoopAll(data.loopSurah);
+    } finally {
+      _lastIndex = data.currentIndex;
+      _playsOfCurrent = 1;
+      _manualJump = false;
+      _isCompleted = false;
+      _restoring = false;
+    }
   }
 
   // Emits download progress at most once per percent.

@@ -16,6 +16,15 @@ class TafsirArgs {
   const TafsirArgs({required this.surahNumber, required this.ayahNumber});
 }
 
+// Arguments for opening the memorization setup on a surah starting from an ayah.
+class HifzArgs {
+  final int surahNumber;
+  final int fromAyah;
+
+  // Creates memorization arguments.
+  const HifzArgs({required this.surahNumber, this.fromAyah = 1});
+}
+
 // Arguments for opening the player on a surah starting from an ayah.
 class PlayerArgs {
   final int surahNumber;

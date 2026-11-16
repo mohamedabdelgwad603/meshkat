@@ -10,12 +10,12 @@ import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_state.da
 import 'package:mishkat/features/home/presentation/widgets/quick_action_tile.dart';
 import 'package:mishkat/features/layout/presentation/cubit/layout_cubit.dart';
 
-// Four shortcuts: surahs, juz, tafsir of the last-read ayah and recitations.
+// Five shortcuts: surahs, juz, tafsir of the last-read ayah, recitations and memorization.
 class QuickActionsRow extends StatelessWidget {
   // Creates the shortcuts row.
   const QuickActionsRow({super.key});
 
-  // Builds the four tiles.
+  // Builds the five tiles.
   @override
   Widget build(BuildContext context) {
     final layout = LayoutCubit.get(context);
@@ -43,8 +43,23 @@ class QuickActionsRow extends StatelessWidget {
             label: TextManager.quickRecitations,
             onTap: () => context.pushNamed(PageName.player),
           ),
+          QuickActionTile(
+            icon: Icons.record_voice_over_outlined,
+            label: TextManager.quickHifz,
+            onTap: () => _openHifz(context),
+          ),
         ],
       ),
+    );
+  }
+
+  // Opens memorization mode on the last-read ayah, or on Al-Fatiha when nothing was read yet.
+  void _openHifz(BuildContext context) {
+    final state = context.read<BookmarksCubit>().state;
+    final lastRead = state is BookmarksSuccess ? state.lastRead : null;
+    context.pushNamed(
+      PageName.hifz,
+      arguments: HifzArgs(surahNumber: lastRead?.surahNumber ?? 1, fromAyah: lastRead?.ayahNumber ?? 1),
     );
   }
 

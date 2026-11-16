@@ -8,4 +8,7 @@ class PageName {
   static const String tafsir = '/tafsir';
   static const String player = '/player';
   static const String credits = '/credits';
+  static const String hifz = '/hifz';
+  static const String hifzSession = '/hifzSession';
+  static const String hifzTest = '/hifzTest';
 }
