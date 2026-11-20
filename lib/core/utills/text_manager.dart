@@ -222,6 +222,8 @@ class TextManager {
   static const String instagram = 'instagram';
   static const String facebook = 'facebook';
   static const String shareAppMessage = 'shareAppMessage';
+  static const String shareAndroidLink = 'shareAndroidLink';
+  static const String shareIosLink = 'shareIosLink';
   static const String storeLinkUnavailable = 'storeLinkUnavailable';
   static const String linkOpenFailed = 'linkOpenFailed';
 

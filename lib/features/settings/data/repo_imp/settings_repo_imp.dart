@@ -6,6 +6,7 @@ import 'package:mishkat/core/errors/safe_execute.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/features/settings/data/datasources/settings_local_data_source.dart';
 import 'package:mishkat/features/settings/data/datasources/settings_remote_data_source.dart';
+import 'package:mishkat/features/settings/data/models/store_links_model.dart';
 import 'package:mishkat/features/settings/domain/repo/settings_repo.dart';
 
 // Implementation of SettingsRepo backed by the device and Remote Config.
@@ -31,9 +32,13 @@ class SettingsRepoImp implements SettingsRepo {
   @override
   Future<Either<Failure, String>> getAppVersion() => safeExecute(request: _local.getAppVersion);
 
-  // Returns this platform's store link.
+  // Returns the Google Play and App Store links for sharing, failing when neither is set.
   @override
-  Future<Either<Failure, String>> getStoreUrl() => safeExecute(request: _requireStoreUrl);
+  Future<Either<Failure, StoreLinksModel>> getStoreLinks() => safeExecute(request: () async {
+        final links = await _remote.getStoreLinks();
+        if (!links.hasAny) throw const ServerException(TextManager.storeLinkUnavailable);
+        return links;
+      });
 
   // Opens the app's review page on this platform's store.
   @override

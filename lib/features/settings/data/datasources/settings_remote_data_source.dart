@@ -3,12 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:mishkat/core/errors/exceptions.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/features/app_update/data/datasources/app_update_remote_data_source.dart';
+import 'package:mishkat/features/settings/data/models/store_links_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Reads the store link from Remote Config and opens external links.
 abstract class SettingsRemoteDataSource {
   // Returns this platform's store link, or an empty string when it is not set.
   Future<String> getStoreUrl();
+
+  // Returns the Google Play and App Store links together.
+  Future<StoreLinksModel> getStoreLinks();
 
   // Opens the given link outside the app.
   Future<void> openExternal(String url);
@@ -24,13 +28,22 @@ class SettingsRemoteDataSourceImp implements SettingsRemoteDataSource {
   // Returns this platform's store link, or an empty string when it is not set.
   @override
   Future<String> getStoreUrl() async {
+    final links = await getStoreLinks();
+    return defaultTargetPlatform == TargetPlatform.iOS ? links.ios : links.android;
+  }
+
+  // Returns the Google Play and App Store links together.
+  @override
+  Future<StoreLinksModel> getStoreLinks() async {
     try {
       await _remoteConfig.fetchAndActivate();
     } catch (e) {
       debugPrint('Settings: fetch failed, using the last activated values: $e');
     }
-    final isIos = defaultTargetPlatform == TargetPlatform.iOS;
-    return _remoteConfig.getString(isIos ? AppUpdateConfigKeys.iosStoreUrl : AppUpdateConfigKeys.androidStoreUrl).trim();
+    return StoreLinksModel.fromJson({
+      'android': _remoteConfig.getString(AppUpdateConfigKeys.androidStoreUrl),
+      'ios': _remoteConfig.getString(AppUpdateConfigKeys.iosStoreUrl),
+    });
   }
 
   // Opens the given link outside the app.

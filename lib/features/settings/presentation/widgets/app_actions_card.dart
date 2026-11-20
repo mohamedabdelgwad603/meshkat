@@ -7,6 +7,7 @@ import 'package:mishkat/core/utills/extentions/build_context_extention.dart';
 import 'package:mishkat/core/utills/functions/share_text.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/core/utills/widgets/custom_text.dart';
+import 'package:mishkat/features/settings/data/models/store_links_model.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_card.dart';
 import 'package:mishkat/features/settings/presentation/widgets/settings_link_tile.dart';
@@ -40,15 +41,22 @@ class AppActionsCard extends StatelessWidget {
     );
   }
 
-  // Shares this platform's store link with a short description of the app.
+  // Shares the Google Play and App Store links with a short description of the app.
   Future<void> _shareApp(BuildContext context) async {
-    final result = await SettingsCubit.get(context).getStoreUrl();
+    final result = await SettingsCubit.get(context).getStoreLinks();
     if (!context.mounted) return;
     result.fold(
       (message) => _showError(context, message),
-      (url) => shareText(context, TextManager.shareAppMessage.tr(context: context, args: [url])),
+      (links) => shareText(context, _shareMessage(context, links)),
     );
   }
+
+  // Builds the share text with a line for each store link that is set.
+  String _shareMessage(BuildContext context, StoreLinksModel links) => [
+        TextManager.shareAppMessage.tr(context: context),
+        if (links.android.isNotEmpty) TextManager.shareAndroidLink.tr(context: context, args: [links.android]),
+        if (links.ios.isNotEmpty) TextManager.shareIosLink.tr(context: context, args: [links.ios]),
+      ].join('\n\n');
 
   // Opens the app's review page on the store.
   Future<void> _rateApp(BuildContext context) async {

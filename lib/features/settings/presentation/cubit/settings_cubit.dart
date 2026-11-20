@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mishkat/features/player/data/models/reciter_model.dart';
 import 'package:mishkat/features/player/domain/repo/player_repo.dart';
 import 'package:mishkat/features/player/presentation/cubit/player_cubit.dart';
+import 'package:mishkat/features/settings/data/models/store_links_model.dart';
 import 'package:mishkat/features/settings/domain/repo/settings_repo.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_state.dart';
 
@@ -60,9 +61,9 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _playerCubit.changeReciter(reciter);
   }
 
-  // Returns this platform's store link, or the failure message key in a Left.
-  Future<Either<String, String>> getStoreUrl() async =>
-      (await _repo.getStoreUrl()).leftMap((failure) => failure.message);
+  // Returns the Google Play and App Store links, or the failure message key in a Left.
+  Future<Either<String, StoreLinksModel>> getStoreLinks() async =>
+      (await _repo.getStoreLinks()).leftMap((failure) => failure.message);
 
   // Opens the store review page and returns the failure message key when it could not.
   Future<String?> rateApp() async => (await _repo.rateApp()).fold((failure) => failure.message, (_) => null);

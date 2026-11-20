@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mishkat/core/errors/failure.dart';
+import 'package:mishkat/features/settings/data/models/store_links_model.dart';
 
 // Contract for reading preferences.
 abstract class SettingsRepo {
@@ -12,8 +13,8 @@ abstract class SettingsRepo {
   // Returns the installed app version.
   Future<Either<Failure, String>> getAppVersion();
 
-  // Returns this platform's store link.
-  Future<Either<Failure, String>> getStoreUrl();
+  // Returns the Google Play and App Store links for sharing the app.
+  Future<Either<Failure, StoreLinksModel>> getStoreLinks();
 
   // Opens the app's review page on this platform's store.
   Future<Either<Failure, Unit>> rateApp();

@@ -200,7 +200,9 @@
   "contactUsSubtitle": "Follow and message us on our pages",
   "instagram": "Instagram",
   "facebook": "Facebook",
-  "shareAppMessage": "📖 Mishkat — your daily companion with the Holy Quran\n\nRead the Mushaf in Uthmani script, listen to renowned reciters, and reflect on the verses with tafsir.\n\nDownload it now:\n{}",
+  "shareAppMessage": "📖 Mishkat — your daily companion with the Holy Quran\n\nRead the Mushaf in Uthmani script, listen to renowned reciters, and reflect on the verses with tafsir.\n\nDownload it now:",
+  "shareAndroidLink": "🤖 Android (Google Play):\n{}",
+  "shareIosLink": "📱 iPhone (App Store):\n{}",
   "storeLinkUnavailable": "The store link isn't available right now, please try again later",
   "linkOpenFailed": "Couldn't open the link, please try again",
 
