@@ -160,6 +160,27 @@ class TextManager {
   static const String hifzScore = 'hifzScore';
   static const String hifzTestAgain = 'hifzTestAgain';
 
+  // Mutashabihat
+  static const String mutashabihatTitle = 'mutashabihatTitle';
+  static const String mutashabihatBanner = 'mutashabihatBanner';
+  static const String mutashabihatView = 'mutashabihatView';
+  static const String mutashabihatBadge = 'mutashabihatBadge';
+  static const String mutashabihatIntro = 'mutashabihatIntro';
+  static const String mutashabihatStats = 'mutashabihatStats';
+  static const String mutashabihatShowAll = 'mutashabihatShowAll';
+  static const String mutashabihatShowLess = 'mutashabihatShowLess';
+  static const String noMutashabihat = 'noMutashabihat';
+  static const String mutashabihatBrowseTitle = 'mutashabihatBrowseTitle';
+  static const String mutashabihatHomeTitle = 'mutashabihatHomeTitle';
+  static const String mutashabihatHomeBody = 'mutashabihatHomeBody';
+  static const String mutashabihatSearchHint = 'mutashabihatSearchHint';
+  static const String mutashabihatAllSurahs = 'mutashabihatAllSurahs';
+  static const String mutashabihatSortMushaf = 'mutashabihatSortMushaf';
+  static const String mutashabihatSortRepeated = 'mutashabihatSortRepeated';
+  static const String mutashabihatResults = 'mutashabihatResults';
+  static const String mutashabihatFirstAt = 'mutashabihatFirstAt';
+  static const String noMutashabihatResults = 'noMutashabihatResults';
+
   // Reflections
   static const String reflectAction = 'reflectAction';
   static const String reflectedAction = 'reflectedAction';
@@ -213,4 +234,6 @@ class TextManager {
   static const String creditsAudioBody = 'creditsAudioBody';
   static const String creditsFontsTitle = 'creditsFontsTitle';
   static const String creditsFontsBody = 'creditsFontsBody';
+  static const String creditsMutashabihatTitle = 'creditsMutashabihatTitle';
+  static const String creditsMutashabihatBody = 'creditsMutashabihatBody';
 }

@@ -7,6 +7,7 @@ import 'package:mishkat/features/home/presentation/widgets/continue_reading_card
 import 'package:mishkat/features/home/presentation/widgets/daily_ayah_section.dart';
 import 'package:mishkat/features/home/presentation/widgets/home_header.dart';
 import 'package:mishkat/features/home/presentation/widgets/quick_actions_row.dart';
+import 'package:mishkat/features/mutashabihat/presentation/widgets/mutashabihat_home_card.dart';
 
 // Scrollable home layout with the card overlapping the green header.
 class HomeBody extends StatelessWidget {
@@ -34,6 +35,8 @@ class HomeBody extends StatelessWidget {
                     const ContinueReadingCard(),
                     verticalSpace(24.h),
                     const QuickActionsRow(),
+                    verticalSpace(20.h),
+                    const MutashabihatHomeCard(),
                     verticalSpace(28.h),
                     const DailyAyahSection(),
                     verticalSpace(24.h),

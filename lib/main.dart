@@ -7,6 +7,7 @@ import 'package:mishkat/app.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/init_di.dart';
 import 'package:mishkat/core/services/notifications/push_notifications_service.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.dart';
+import 'package:mishkat/features/mutashabihat/presentation/cubit/mutashabihat_index_cubit.dart';
 import 'package:mishkat/features/reflections/presentation/cubit/reflections_cubit.dart';
 import 'package:mishkat/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:mishkat/firebase_options.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
   await initDi();
   getIt<BookmarksCubit>().load();
   getIt<ReflectionsCubit>().load();
+  getIt<MutashabihatIndexCubit>().load();
   getIt<SettingsCubit>().load();
   getIt<PushNotificationsService>().init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

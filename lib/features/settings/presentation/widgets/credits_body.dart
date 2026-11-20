@@ -60,6 +60,8 @@ class CreditsBody extends StatelessWidget {
             const CreditCard(title: TextManager.creditsAudioTitle, body: TextManager.creditsAudioBody),
             verticalSpace(12.h),
             const CreditCard(title: TextManager.creditsFontsTitle, body: TextManager.creditsFontsBody),
+            verticalSpace(12.h),
+            const CreditCard(title: TextManager.creditsMutashabihatTitle, body: TextManager.creditsMutashabihatBody),
             verticalSpace(20.h),
             const CreditsVersionText(),
           ],

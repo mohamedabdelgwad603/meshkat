@@ -11,4 +11,7 @@ class PageName {
   static const String hifz = '/hifz';
   static const String hifzSession = '/hifzSession';
   static const String hifzTest = '/hifzTest';
+  static const String mutashabihat = '/mutashabihat';
+  static const String mutashabihatBrowse = '/mutashabihatBrowse';
+  static const String mutashabihPhrase = '/mutashabihPhrase';
 }

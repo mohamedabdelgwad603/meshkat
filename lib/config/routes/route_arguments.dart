@@ -25,6 +25,23 @@ class HifzArgs {
   const HifzArgs({required this.surahNumber, this.fromAyah = 1});
 }
 
+// Arguments for opening the similar phrases of an ayah.
+class MutashabihatArgs {
+  final int surahNumber;
+  final int ayahNumber;
+
+  // Creates mutashabihat arguments.
+  const MutashabihatArgs({required this.surahNumber, required this.ayahNumber});
+}
+
+// Arguments for opening one similar phrase with all its ayahs.
+class MutashabihPhraseArgs {
+  final int phraseId;
+
+  // Creates phrase arguments.
+  const MutashabihPhraseArgs({required this.phraseId});
+}
+
 // Arguments for opening the player on a surah starting from an ayah.
 class PlayerArgs {
   final int surahNumber;

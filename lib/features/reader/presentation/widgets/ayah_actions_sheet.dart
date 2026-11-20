@@ -22,6 +22,7 @@ import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
 import 'package:mishkat/features/reader/presentation/widgets/ayah_action_button.dart';
 import 'package:mishkat/features/reader/presentation/widgets/tafsir_preview_card.dart';
+import 'package:mishkat/features/mutashabihat/presentation/widgets/mutashabihat_banner.dart';
 import 'package:mishkat/features/reflections/data/requests_params/save_reflection_params.dart';
 import 'package:mishkat/features/reflections/presentation/widgets/reflect_action_button.dart';
 import 'package:mishkat/features/tafsir/presentation/cubit/tafsir_cubit.dart';
@@ -80,7 +81,7 @@ class _SheetContent extends StatelessWidget {
     required this.ayah,
   });
 
-  // Builds the handle, title, action grid and tafsir preview.
+  // Builds the handle, title, action grid, mutashabihat strip and tafsir preview.
   @override
   Widget build(BuildContext context) {
     final isArabic = context.locale.languageCode == 'ar';
@@ -146,6 +147,7 @@ class _SheetContent extends StatelessWidget {
               note: '',
             ),
           ),
+          MutashabihatBanner(surahNumber: surahNumber, ayahNumber: ayah.numberInSurah),
           verticalSpace(14.h),
           BlocProvider(
             create: (_) => getIt<TafsirCubit>()..init(surahNumber, ayah.numberInSurah),

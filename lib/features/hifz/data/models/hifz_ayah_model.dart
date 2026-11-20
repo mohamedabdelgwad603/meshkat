@@ -39,8 +39,8 @@ class HifzAyahModel extends Equatable {
         isLocalFile: false,
       );
 
-  // Returns the words of the ayah in reading order.
-  List<String> get words => text.trim().split(RegExp(r'\s+'));
+  // Returns the words of the ayah in reading order, without the quarter and prostration marks.
+  List<String> get words => text.trim().split(RegExp(r'\s+')).where((w) => w != '۞' && w != '۩').toList();
 
   // Lists the fields used for equality.
   @override

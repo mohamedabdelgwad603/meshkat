@@ -6,6 +6,9 @@ import 'package:mishkat/features/hifz/presentation/screens/hifz_session_screen.d
 import 'package:mishkat/features/hifz/presentation/screens/hifz_setup_screen.dart';
 import 'package:mishkat/features/hifz/presentation/screens/hifz_test_screen.dart';
 import 'package:mishkat/features/layout/presentation/screens/main_layout_screen.dart';
+import 'package:mishkat/features/mutashabihat/presentation/screens/mutashabih_phrase_screen.dart';
+import 'package:mishkat/features/mutashabihat/presentation/screens/mutashabihat_browse_screen.dart';
+import 'package:mishkat/features/mutashabihat/presentation/screens/mutashabihat_screen.dart';
 import 'package:mishkat/features/player/presentation/screens/player_screen.dart';
 import 'package:mishkat/features/reader/presentation/screens/reader_screen.dart';
 import 'package:mishkat/features/settings/presentation/screens/credits_screen.dart';
@@ -38,6 +41,12 @@ class RouteManager {
         return _getPageTransition(HifzSessionScreen(params: settings.arguments as HifzSessionParams), settings);
       case PageName.hifzTest:
         return _getPageTransition(HifzTestScreen(params: settings.arguments as HifzSessionParams), settings);
+      case PageName.mutashabihat:
+        return _getPageTransition(MutashabihatScreen(args: settings.arguments as MutashabihatArgs), settings);
+      case PageName.mutashabihatBrowse:
+        return _getPageTransition(const MutashabihatBrowseScreen(), settings);
+      case PageName.mutashabihPhrase:
+        return _getPageTransition(MutashabihPhraseScreen(args: settings.arguments as MutashabihPhraseArgs), settings);
       default:
         return _getPageTransition(const MainLayoutScreen(), settings);
     }

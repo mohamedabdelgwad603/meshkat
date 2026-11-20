@@ -11,6 +11,7 @@ import 'package:mishkat/features/hifz/presentation/cubit/hifz_test_cubit.dart';
 import 'package:mishkat/features/hifz/presentation/cubit/hifz_test_state.dart';
 import 'package:mishkat/features/hifz/presentation/widgets/hifz_hidden_word.dart';
 import 'package:mishkat/features/hifz/presentation/widgets/hifz_test_actions.dart';
+import 'package:mishkat/features/mutashabihat/presentation/widgets/mutashabihat_badge.dart';
 
 // One ayah of the test: shown words, blanks for hidden ones, its rating and the reveal or rate buttons.
 class HifzTestAyahCard extends StatelessWidget {
@@ -42,6 +43,8 @@ class HifzTestAyahCard extends StatelessWidget {
           Row(
             children: [
               StarNumberBadge(number: ayah.ayahNumber, size: 34),
+              horizontalSpace(8.w),
+              MutashabihatBadge(surahNumber: ayah.surahNumber, ayahNumber: ayah.ayahNumber),
               const Spacer(),
               if (result != null) _buildResultTag(context, result),
             ],
