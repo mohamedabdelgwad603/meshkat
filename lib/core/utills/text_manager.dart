@@ -86,7 +86,7 @@ class TextManager {
   static const String copied = 'copied';
   static const String bookmarkAdded = 'bookmarkAdded';
   static const String bookmarkRemoved = 'bookmarkRemoved';
-  static const String readFullTafsir = 'readFullTafsir';
+  static const String showOtherTafsirs = 'showOtherTafsirs';
   static const String bookmarkPage = 'bookmarkPage';
   static const String readingSettings = 'readingSettings';
   static const String backAction = 'backAction';

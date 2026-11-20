@@ -27,9 +27,9 @@ class TafsirRepoImp implements TafsirRepo {
   @override
   Future<Either<Failure, List<TafsirEditionModel>>> getEditions() => safeExecute(request: () async {
         try {
-          return _local.getCachedEditions();
+          return _sort(_withTabari(_local.getCachedEditions()));
         } on CacheException {
-          final editions = _sort(await _remote.getEditions(EditionsParams.arabicTafsir));
+          final editions = _sort(_withTabari(await _remote.getEditions(EditionsParams.arabicTafsir)));
           await _local.cacheEditions(editions);
           return editions;
         }
@@ -48,10 +48,16 @@ class TafsirRepoImp implements TafsirRepo {
   @override
   Future<void> saveSelectedEdition(String identifier) => _local.saveSelectedEdition(identifier);
 
+  // Adds Tafsir al-Tabari from the Quran.com API when the list does not have it yet.
+  List<TafsirEditionModel> _withTabari(List<TafsirEditionModel> editions) =>
+      editions.any((e) => e.identifier == TafsirEditionModel.tabari.identifier)
+          ? editions
+          : [...editions, TafsirEditionModel.tabari];
+
   // Orders editions by the preferred keyword list, keeping unknown ones at the end.
   List<TafsirEditionModel> _sort(List<TafsirEditionModel> editions) {
     int rank(TafsirEditionModel e) {
-      final id = e.identifier.replaceFirst('ar.', '');
+      final id = e.identifier.replaceFirst(RegExp(r'^(ar|qurancom)\.'), '');
       final index = _preferredOrder.indexWhere(id.contains);
       return index < 0 ? _preferredOrder.length : index;
     }

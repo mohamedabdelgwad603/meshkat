@@ -19,6 +19,14 @@ class EndPoints {
   // Reciters shown at the top of the list, in this order.
   static const List<String> pinnedReciters = [bannaReciter, minshawiReciter, 'ar.husary'];
 
+  // Tafsir al-Tabari, served by the Quran.com API because Al Quran Cloud does not carry it.
+  static const String tabariTafsir = 'qurancom.tabari';
+  static const int quranComTabariId = 15;
+
+  // Returns the Quran.com API URL of one ayah's tafsir in the given Quran.com tafsir.
+  static String quranComTafsir(int tafsirId, String ayahKey) =>
+      'https://api.quran.com/api/v4/tafsirs/$tafsirId/by_ayah/$ayahKey';
+
   // Lists the 114 surahs with their metadata.
   static const String surahs = '/surah';
 

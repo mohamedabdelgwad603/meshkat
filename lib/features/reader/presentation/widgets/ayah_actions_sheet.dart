@@ -7,6 +7,7 @@ import 'package:mishkat/config/routes/page_name.dart';
 import 'package:mishkat/config/routes/route_arguments.dart';
 import 'package:mishkat/config/themes/color_manager.dart';
 import 'package:mishkat/config/themes/text_styles.dart';
+import 'package:mishkat/core/api/end_points.dart';
 import 'package:mishkat/core/services/dependancy_injection_methods/init_di.dart';
 import 'package:mishkat/core/utills/extentions/build_context_extention.dart';
 import 'package:mishkat/core/utills/functions/localized_digits.dart';
@@ -87,11 +88,15 @@ class _SheetContent extends StatelessWidget {
     required this.ayah,
   });
 
-  // Builds the handle, title, action grid, mutashabihat strip and tafsir preview.
+  // Largest share of the screen height the panel may take before its content scrolls.
+  static const double _maxHeightFactor = 0.6;
+
+  // Builds the fixed handle and title above the scrollable actions, mutashabihat strip and tafsir.
   @override
   Widget build(BuildContext context) {
     final isArabic = context.locale.languageCode == 'ar';
     return Container(
+      constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * _maxHeightFactor),
       decoration: BoxDecoration(
         color: ColorsManager.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
@@ -140,24 +145,34 @@ class _SheetContent extends StatelessWidget {
             ],
           ),
           verticalSpace(14.h),
-          _ActionsGrid(
-            surahNumber: surahNumber,
-            surahName: isArabic ? surahName : surahEnglishName,
-            ayah: ayah,
-            reflectionTarget: SaveReflectionParams(
-              surahNumber: surahNumber,
-              surahName: surahName,
-              surahEnglishName: surahEnglishName,
-              ayahNumber: ayah.numberInSurah,
-              ayahText: ayah.text,
-              note: '',
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _ActionsGrid(
+                    surahNumber: surahNumber,
+                    surahName: isArabic ? surahName : surahEnglishName,
+                    ayah: ayah,
+                    reflectionTarget: SaveReflectionParams(
+                      surahNumber: surahNumber,
+                      surahName: surahName,
+                      surahEnglishName: surahEnglishName,
+                      ayahNumber: ayah.numberInSurah,
+                      ayahText: ayah.text,
+                      note: '',
+                    ),
+                  ),
+                  MutashabihatBanner(surahNumber: surahNumber, ayahNumber: ayah.numberInSurah),
+                  verticalSpace(14.h),
+                  BlocProvider(
+                    create: (_) =>
+                        getIt<TafsirCubit>()..init(surahNumber, ayah.numberInSurah, edition: EndPoints.defaultTafsir),
+                    child: TafsirPreviewCard(surahNumber: surahNumber, ayahNumber: ayah.numberInSurah),
+                  ),
+                ],
+              ),
             ),
-          ),
-          MutashabihatBanner(surahNumber: surahNumber, ayahNumber: ayah.numberInSurah),
-          verticalSpace(14.h),
-          BlocProvider(
-            create: (_) => getIt<TafsirCubit>()..init(surahNumber, ayah.numberInSurah),
-            child: TafsirPreviewCard(surahNumber: surahNumber, ayahNumber: ayah.numberInSurah),
           ),
         ],
       ),

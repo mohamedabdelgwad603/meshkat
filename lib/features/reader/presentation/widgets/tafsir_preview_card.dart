@@ -16,7 +16,7 @@ import 'package:mishkat/features/tafsir/presentation/cubit/tafsir_cubit.dart';
 import 'package:mishkat/features/tafsir/presentation/cubit/tafsir_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-// Two-line tafsir excerpt for the selected ayah that opens the full tafsir.
+// Full tafsir of the selected ayah in the panel, opening the tafsir screen with the other books when tapped.
 class TafsirPreviewCard extends StatelessWidget {
   final int surahNumber;
   final int ayahNumber;
@@ -68,14 +68,13 @@ class TafsirPreviewCard extends StatelessWidget {
                       child: CustomText(
                         text: (tafsir ?? TafsirModel.dummy()).text,
                         translate: false,
-                        maxLines: 2,
                         textDirection: TextDirection.rtl,
                         style: getRegularStyle(context: context, fontSize: 14.sp, height: 1.8),
                       ),
                     ),
                   verticalSpace(6.h),
                   CustomText(
-                    text: TextManager.readFullTafsir,
+                    text: TextManager.showOtherTafsirs,
                     style: getSemiBoldStyle(context: context, fontSize: 13.sp, color: ColorsManager.primary),
                   ),
                 ],

@@ -19,8 +19,8 @@ class TafsirCubit extends Cubit<TafsirState> {
   // Returns the cubit provided above the given context.
   static TafsirCubit get(BuildContext context) => BlocProvider.of(context);
 
-  // Loads the surah text, the tafsir books and the tafsir of the given ayah.
-  Future<void> init(int surahNumber, int ayahNumber) async {
+  // Loads the surah text, the tafsir books and the tafsir of the given ayah, in the given book or the saved one.
+  Future<void> init(int surahNumber, int ayahNumber, {String? edition}) async {
     if (isClosed) return;
     emit(const TafsirLoading());
     final surahResult = await _readerRepo.getSurahText(SurahTextParams(surahNumber: surahNumber));
@@ -31,7 +31,7 @@ class TafsirCubit extends Cubit<TafsirState> {
       (surah) {
         final editions = editionsResult.getOrElse(() => const <TafsirEditionModel>[]);
         final safeEditions = editions.isEmpty ? [TafsirEditionModel.dummy()] : editions;
-        final saved = _repo.getSelectedEdition();
+        final saved = edition ?? _repo.getSelectedEdition();
         final selected = safeEditions.any((e) => e.identifier == saved) ? saved : safeEditions.first.identifier;
         emit(TafsirSuccess(
           surah: surah,

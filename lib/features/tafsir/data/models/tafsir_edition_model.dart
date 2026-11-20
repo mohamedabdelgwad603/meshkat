@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mishkat/core/api/end_points.dart';
 
 // One tafsir book available from the API.
 class TafsirEditionModel extends Equatable {
@@ -18,6 +19,13 @@ class TafsirEditionModel extends Equatable {
 
   // Serializes the edition for the local cache.
   Map<String, dynamic> toJson() => {'identifier': identifier, 'name': name, 'englishName': englishName};
+
+  // Tafsir al-Tabari, added to the list from the Quran.com API.
+  static const TafsirEditionModel tabari = TafsirEditionModel(
+    identifier: EndPoints.tabariTafsir,
+    name: 'تفسير الطبري',
+    englishName: 'Tafsir al-Tabari',
+  );
 
   // Builds a placeholder edition for Skeletonizer loading states.
   factory TafsirEditionModel.dummy() =>

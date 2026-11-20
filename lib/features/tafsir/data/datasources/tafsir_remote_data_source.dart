@@ -32,6 +32,10 @@ class TafsirRemoteDataSourceImp implements TafsirRemoteDataSource {
   // Returns the tafsir of one ayah.
   @override
   Future<TafsirModel> getTafsir(TafsirParams params) async {
+    if (params.edition == EndPoints.tabariTafsir) {
+      final response = await _apiConsumer.get(EndPoints.quranComTafsir(EndPoints.quranComTabariId, params.reference));
+      return TafsirModel.fromQuranComJson(response as Map<String, dynamic>, edition: params.edition);
+    }
     final response = await _apiConsumer.get(EndPoints.ayah(params.reference, params.edition));
     return TafsirModel.fromJson(response['data'] as Map<String, dynamic>);
   }
