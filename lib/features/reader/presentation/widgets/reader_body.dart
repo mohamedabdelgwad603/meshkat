@@ -8,9 +8,8 @@ import 'package:mishkat/features/reader/data/models/mushaf_model.dart';
 import 'package:mishkat/features/reader/data/models/mushaf_page_model.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_cubit.dart';
 import 'package:mishkat/features/reader/presentation/cubit/reader_state.dart';
-import 'package:mishkat/features/reader/presentation/widgets/ayah_actions_sheet.dart';
 import 'package:mishkat/features/reader/presentation/widgets/mushaf_page.dart';
-import 'package:mishkat/features/reader/presentation/widgets/mushaf_page_view.dart';
+import 'package:mishkat/features/reader/presentation/widgets/reader_content.dart';
 import 'package:mishkat/features/reader/presentation/widgets/reader_top_bar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -47,17 +46,7 @@ class ReaderBody extends StatelessWidget {
                 );
               }
               if (state is! ReaderSuccess) return const _ReaderSkeleton();
-              return const Stack(
-                children: [
-                  Column(
-                    children: [
-                      ReaderTopBar(),
-                      Expanded(child: MushafPageView()),
-                    ],
-                  ),
-                  Align(alignment: Alignment.bottomCenter, child: AyahActionsSheet()),
-                ],
-              );
+              return const ReaderContent();
             },
           ),
         ),

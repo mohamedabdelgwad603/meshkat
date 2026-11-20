@@ -14,6 +14,7 @@ import 'package:mishkat/core/utills/functions/spacing.dart';
 import 'package:mishkat/core/utills/functions/share_text.dart';
 import 'package:mishkat/core/utills/text_manager.dart';
 import 'package:mishkat/core/utills/widgets/custom_text.dart';
+import 'package:mishkat/core/utills/widgets/measure_size.dart';
 import 'package:mishkat/core/utills/widgets/round_icon_button.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_cubit.dart';
 import 'package:mishkat/features/bookmarks/presentation/cubit/bookmarks_state.dart';
@@ -29,8 +30,10 @@ import 'package:mishkat/features/tafsir/presentation/cubit/tafsir_cubit.dart';
 
 // Bottom panel that slides up when an ayah is selected, with actions and a tafsir preview.
 class AyahActionsSheet extends StatelessWidget {
-  // Creates the panel.
-  const AyahActionsSheet({super.key});
+  final ValueChanged<double> onHeightChanged;
+
+  // Creates the panel, reporting its height so the pages can scroll above it.
+  const AyahActionsSheet({super.key, required this.onHeightChanged});
 
   // Shows or hides the panel based on the selected ayah.
   @override
@@ -43,22 +46,25 @@ class AyahActionsSheet extends StatelessWidget {
         final success = state is ReaderSuccess ? state : null;
         final ayah = success?.selectedAyahModel;
         final surah = success != null && success.hasSelection ? success.mushaf.surah(success.selectedSurah!) : null;
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 260),
-          transitionBuilder: (child, animation) => SlideTransition(
-            position: Tween(begin: const Offset(0, 1), end: Offset.zero)
-                .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
-            child: child,
+        return MeasureSize(
+          onChange: (size) => onHeightChanged(size.height),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 260),
+            transitionBuilder: (child, animation) => SlideTransition(
+              position: Tween(begin: const Offset(0, 1), end: Offset.zero)
+                  .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+              child: child,
+            ),
+            child: ayah == null || surah == null
+                ? const SizedBox.shrink(key: ValueKey('none'))
+                : _SheetContent(
+                    key: ValueKey('${surah.number}:${ayah.numberInSurah}'),
+                    surahNumber: surah.number,
+                    surahName: surah.shortName,
+                    surahEnglishName: surah.englishName,
+                    ayah: ayah,
+                  ),
           ),
-          child: ayah == null || surah == null
-              ? const SizedBox.shrink(key: ValueKey('none'))
-              : _SheetContent(
-                  key: ValueKey('${surah.number}:${ayah.numberInSurah}'),
-                  surahNumber: surah.number,
-                  surahName: surah.shortName,
-                  surahEnglishName: surah.englishName,
-                  ayah: ayah,
-                ),
         );
       },
     );
